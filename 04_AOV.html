@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Drone Camera Angle of View (AOV) Simulation</title>
+<title>Dronography Angle of View (AOV) Simulation</title>
 <style>
     body {
         margin: 0;
@@ -16,7 +16,7 @@
     
     #title {
         position: fixed;
-        top: 20px;
+        top: 5px;
         left: 50%;
         transform: translateX(-50%);
         background: rgba(0, 0, 0, 0.7);
@@ -31,14 +31,14 @@
     
     #title h1 {
         margin: 0;
-        font-size: 24px;
+        font-size: 20px;
     }
     
     /* Style for Language Toggle and Start Tutorial Buttons */
     #languageToggle, #startTutorial {
       margin-bottom: 10px;
       padding: 5px 10px;
-      font-size: 14px;
+      font-size: 12px;
       cursor: pointer;
       background: #4CAF50;
       border: none;
@@ -54,8 +54,9 @@
     
     /* Controls Panel Styling */
     #controls {
+        font-size: 0.8rem;
         position: fixed;
-        top: 40px;
+        top: 10px;
         left: 10px;
         background: rgba(0,0,0,0.7);
         color: white;
@@ -93,7 +94,7 @@
         box-sizing: border-box;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-        top: 60px;
+        top: 10px;
         right: 10px;
         max-height: calc(100vh - 70px);
         font-size: 14px;
@@ -111,7 +112,7 @@
     
     #additionalControls input[type="range"] {
         width: 100%;
-        height: 10px;
+        height: 5px;
         padding: 5px;
         margin: 2px 0 8px;
         font-size: 12px;
@@ -119,7 +120,7 @@
     
     #additionalControls button {
         width: 100%;
-        padding: 8px;
+        padding: 10px;
         margin: 5px 0;
         font-size: 14px;
     }
@@ -200,8 +201,8 @@
     input[type="range"]::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
-        width: 35px;
-        height: 35px;
+        width: 15px;
+        height: 15px;
         background: #4CAF50;
         cursor: pointer;
         border-radius: 50%;
@@ -273,11 +274,13 @@
     }
     
     .toggle-building {
+
         background-color: #4CAF50;
+        font-size: 14px; 
         color: white;
         cursor: pointer;
         transition: background-color 0.3s;
-        margin-top: 5px; /* Added margin for better spacing */
+        margin-top: 2px; /* Added margin for better spacing */
         width: 100%;
     }
     
@@ -365,34 +368,84 @@
         box-sizing: border-box;
     }
     
-    #highlightBox {
-        position: absolute;
-        border: 3px solid #FFA500;
-        border-radius: 5px;
-        z-index: 2500;
-        pointer-events: none;
-        box-sizing: border-box;
-        display: none;
-        transition: all 0.3s ease;
-    }
+/* Highlighting Elements During Tutorial */
+#highlightBox {
+    position: fixed; /* Changed from absolute to fixed */
+    border: 3px solid #FFA500;
+    border-radius: 5px;
+    z-index: 2500;
+    pointer-events: none;
+    box-sizing: border-box;
+    display: none;
+    transition: all 0.3s ease;
+}
     
     #tutorialOverlay.active {
         /* Optional: Dim the background more when highlighting */
         background-color: rgba(0, 0, 0, 0.8);
     }
     
+/* Styles for Calculate AOV Results */
+#calc1Results .aovRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px; /* Adjust spacing between rows if needed */
+}
+
+#calc1Results .labels span, 
+#calc1Results .values span {
+    flex: 2;
+    text-align: center; /* Centers the text within each span */
+    font-size: 15px;    /* Sets a readable font size */
+}
+
+/* Optional: Reduce font size for smaller screens */
+@media (max-width: 768px) {
+    #calc1Results .labels span, 
+    #calc1Results .values span {
+        font-size: 12px; /* Smaller font size for mobile devices */
+    }
+}
+
     @media (max-width: 768px) {
         #tutorialContent {
             width: 90%;
         }
     }
     
+/* New Styles for Calculate Altitude Results */
+#calc2Results {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+#calc2Results label {
+    flex: 1;
+    font-size: 14px;
+}
+
+#calc2Results span {
+    flex: 1;
+    text-align: right;
+    font-size: 15px;
+}
+
+/* Adjust font sizes for smaller screens if needed */
+@media (max-width: 768px) {
+    #calc2Results label,
+    #calc2Results span {
+        font-size: 12px;
+    }
+}
+
 </style>
 </head>
 <body>
     <!-- Title -->
     <div id="title">
-        <h1 data-i18n="Drone Camera AOV Simulation" data-i18n-zh="無人機相機視角模擬">Drone Camera AOV Simulation</h1>
+        <h1 data-i18n="Dronography AOV Simulation" data-i18n-zh="航拍視角模擬">Dronography AOV Simulation</h1>
     </div>
     
     <!-- Controls -->
@@ -413,7 +466,7 @@
         <div>
             <label for="aov">
                 <span data-i18n="Horizontal AOV:" data-i18n-zh="水平視角:">Horizontal AOV:</span>
-                <span id="aovValue">70</span>°
+                <span id="aovValue">70</span> °
             </label>
             <input type="range" id="aov" min="30" max="120" value="70">
         </div>
@@ -421,30 +474,30 @@
         <div id="verticalDiagonalAOV">
             <label>
                 <span data-i18n="Vertical AOV:" data-i18n-zh="垂直視角:">Vertical AOV:</span>
-                <span id="vaovValue">0.0</span>°
+                <span id="vaovValue">0.0</span> °
             </label>
             <label>
                 <span data-i18n="Diagonal AOV:" data-i18n-zh="對角線視角:">Diagonal AOV:</span>
-                <span id="daovValue">0.0</span>°
+                <span id="daovValue">0.0</span> °
             </label>
         </div>
     
         <div id="altitudeFOVMeasurements">
             <label>
                 <span data-i18n="Altitude:" data-i18n-zh="高度:">Altitude:</span>
-                <span id="altitudeValue">0</span>m
+                <span id="altitudeValue">0</span> m
             </label>
             <label>
                 <span data-i18n="FOV Width:" data-i18n-zh="視野寬度:">FOV Width:</span>
-                <span id="widthValue">0</span>m
+                <span id="widthValue">0</span> m
             </label>
             <label>
                 <span data-i18n="FOV Height:" data-i18n-zh="視野高度:">FOV Height:</span>
-                <span id="heightValue">0</span>m
+                <span id="heightValue">0</span> m
             </label>
             <label>
                 <span data-i18n="Area Captured:" data-i18n-zh="捕捉面積:">Area Captured:</span>
-                <span id="areaValue">0</span>m²
+                <span id="areaValue">0</span> m²
             </label>
         </div>
     
@@ -479,14 +532,14 @@
         <div>
             <label for="calc1Altitude">
                 <span data-i18n="Altitude:" data-i18n-zh="高度：">Altitude:</span>
-                <span id="calc1AltitudeValue">0</span>m
+                <span id="calc1AltitudeValue">0</span> m
             </label>
             <input type="range" id="calc1Altitude" min="0" max="500" value="0">
         </div>
         <div>
             <label for="calc1FOVWidth">
                 <span data-i18n="FOV Width:" data-i18n-zh="視角寬度：">FOV Width:</span>
-                <span id="calc1FOVWidthValue">0</span>m
+                <span id="calc1FOVWidthValue">0</span> m
             </label>
             <input type="range" id="calc1FOVWidth" min="0" max="1732" value="0">
         </div>
@@ -494,20 +547,20 @@
             <span data-i18n="Calculate AOV" data-i18n-zh="計算視角">Calculate AOV</span>
         </button>
     
-        <div id="calc1Results">
-            <p>
-                <label data-i18n="Horizontal AOV:" data-i18n-zh="水平視角：">Horizontal AOV:</label>
-                <span id="calc1HorizontalAOV">0.0</span>°
-            </p>
-            <p>
-                <label data-i18n="Vertical AOV:" data-i18n-zh="垂直視角：">Vertical AOV:</label>
-                <span id="calc1VerticalAOV">0.0</span>°
-            </p>
-            <p>
-                <label data-i18n="Diagonal AOV:" data-i18n-zh="對角視角：">Diagonal AOV:</label>
-                <span id="calc1DiagonalAOV">0.0</span>°
-            </p>
+    <div id="calc1Results">
+        <!-- First Row: Labels -->
+        <div class="aovRow labels">
+            <span data-i18n="Horizontal AOV:" data-i18n-zh="水平視角：">Horizontal AOV:</span>
+            <span data-i18n="Vertical AOV:" data-i18n-zh="垂直視角：">Vertical AOV:</span>
+            <span data-i18n="Diagonal AOV:" data-i18n-zh="對角視角：">Diagonal AOV:</span>
         </div>
+        <!-- Second Row: Values -->
+        <div class="aovRow values">
+            <span id="calc1HorizontalAOV">0.0</span>°
+            <span id="calc1VerticalAOV">0.0</span>°
+            <span id="calc1DiagonalAOV">0.0</span>°
+        </div>
+    </div>
     
         <hr>
     
@@ -521,7 +574,7 @@
         <div>
             <label for="calc2DiagonalAOV">
                 <span data-i18n="Diagonal AOV:" data-i18n-zh="對角線視角：">Diagonal AOV:</span>
-                <span id="calc2DiagonalAOVValue">0</span>°
+                <span id="calc2DiagonalAOVValue">0</span> °
             </label>
             <input type="range" id="calc2DiagonalAOV" min="0" max="128" value="0">
         </div>
@@ -529,7 +582,7 @@
         <div>
             <label for="calc2FOVWidth">
                 <span data-i18n="FOV Width:" data-i18n-zh="視角寬度：">FOV Width:</span>
-                <span id="calc2FOVWidthValue">0</span>°
+                <span id="calc2FOVWidthValue">0</span> m
             </label>
             <input type="range" id="calc2FOVWidth" min="0" max="1732" value="0">
         </div>
@@ -540,7 +593,7 @@
     
         <div id="calc2Results">
             <label data-i18n="Required Altitude:" data-i18n-zh="所需高度：">Required Altitude:</label>
-            <span id="calc2Altitude">0.0</span>m
+            <span id="calc2Altitude">0.0</span> m
         </div>
     </div>
     
@@ -567,7 +620,7 @@
             <!-- Step 1 -->
             <div class="step active" data-step="1">
                 <h2 data-i18n="Welcome to the Tutorial" data-i18n-zh="歡迎來到教程">Welcome to the Tutorial</h2>
-                <p data-i18n="This tutorial will guide you through the various features of the Drone Camera AOV Simulation. Let's get started!" data-i18n-zh="本教程將引導您了解無人機相機視角模擬的各種功能。讓我們開始吧！">This tutorial will guide you through the various features of the Drone Camera AOV Simulation. Let's get started!</p>
+                <p data-i18n="This tutorial will guide you through the various features of the Dronography AOV Simulation. Let's get started!" data-i18n-zh="本教程將引導您了解航拍視角模擬的各種功能。讓我們開始吧！">This tutorial will guide you through the various features of the Dronography AOV Simulation. Let's get started!</p>
             </div>
             <!-- Step 2: Aspect Ratio -->
             <div class="step" data-step="2">
@@ -615,7 +668,7 @@
             <!-- Step 10: Conclusion -->
             <div class="step" data-step="10">
                 <h2 data-i18n="Tutorial Complete" data-i18n-zh="教程完成">Tutorial Complete</h2>
-                <p data-i18n="You are now ready to explore the Drone Camera AOV Simulation. Experiment with different settings to understand how they affect the camera's field of view and the area captured." data-i18n-zh="您現在可以開始探索無人機相機視角模擬。嘗試不同的設置以了解它們如何影響相機的視野和所捕捉的面積。">You are now ready to explore the Drone Camera AOV Simulation. Experiment with different settings to understand how they affect the camera's field of view and the area captured.</p>
+                <p data-i18n="You are now ready to explore the Dronography AOV Simulation. Experiment with different settings to understand how they affect the camera's field of view and the area captured." data-i18n-zh="您現在可以開始探索航拍視角模擬。嘗試不同的設置以了解它們如何影響相機的視野和所捕捉的面積。">You are now ready to explore the Dronography AOV Simulation. Experiment with different settings to understand how they affect the camera's field of view and the area captured.</p>
             </div>
             <!-- Navigation Buttons -->
             <div id="tutorialNavigation">
@@ -923,7 +976,7 @@
     
             // Stand
             const standGeometry = new THREE.BoxGeometry(0.5, 12, 0.5);
-            const standMaterial = new THREE.MeshBasicMaterial({ color: 0x808080 });
+            const standMaterial = new THREE.MeshPhongMaterial({ color: 0x808080 });
             const stand = new THREE.Mesh(standGeometry, standMaterial);
             stand.position.y = 6;
             stand.position.z = posZ + (rotation === 0 ? -4 : 4);
@@ -2391,7 +2444,7 @@ function showStep(index) {
         nextStepButton.textContent = nextStepButton.getAttribute('data-i18n-zh');
     }
 }
-  
+
 function updateLanguageText() {
     elements.forEach(element => {
         if (languageToggle.textContent === '繁體中文') {
@@ -2407,46 +2460,56 @@ function updateLanguageText() {
         }
     });
 }
-  
-    function highlightCurrentStep() {
-        const currentStepElement = steps[currentStep];
-        const targetSelector = getTargetSelector(currentStep);
+
+
+
+function highlightCurrentStep() {
+    const currentStepElement = steps[currentStep];
+    const targetSelector = getTargetSelector(currentStep);
     
-        if (targetSelector) {
-            const targetElements = document.querySelectorAll(targetSelector);
-            if (targetElements.length > 0) {
-                // Calculate the bounding rectangle that encompasses all target elements
-                let minLeft = Infinity, minTop = Infinity, maxRight = -Infinity, maxBottom = -Infinity;
+    if (targetSelector) {
+        const targetElements = document.querySelectorAll(targetSelector);
+        if (targetElements.length > 0) {
+            // Calculate the bounding rectangle that encompasses all target elements
+            let minLeft = Infinity, minTop = Infinity, maxRight = -Infinity, maxBottom = -Infinity;
     
-                targetElements.forEach(elem => {
-                    const rect = elem.getBoundingClientRect();
-                    if (rect.left < minLeft) minLeft = rect.left;
-                    if (rect.top < minTop) minTop = rect.top;
-                    if (rect.right > maxRight) maxRight = rect.right;
-                    if (rect.bottom > maxBottom) maxBottom = rect.bottom;
-                });
+            targetElements.forEach(elem => {
+                const rect = elem.getBoundingClientRect();
+                if (rect.left < minLeft) minLeft = rect.left;
+                if (rect.top < minTop) minTop = rect.top;
+                if (rect.right > maxRight) maxRight = rect.right;
+                if (rect.bottom > maxBottom) maxBottom = rect.bottom;
+            });
     
-                const width = maxRight - minLeft;
-                const height = maxBottom - minTop;
-                const left = minLeft;
-                const top = minTop;
+            // Add some padding to the highlight box
+            const padding = 10; // pixels
+            const width = maxRight - minLeft + padding * 2;
+            const height = maxBottom - minTop + padding * 2;
+            const left = minLeft - padding;
+            const top = minTop - padding;
     
-                highlightBox.style.display = 'block';
-                highlightBox.style.width = `${width}px`;
-                highlightBox.style.height = `${height}px`;
-                highlightBox.style.left = `${left}px`;
-                highlightBox.style.top = `${top}px`;
-                tutorialOverlay.classList.add('active');
-            } else {
-                // If no targeted elements found, hide the highlight
-                removeHighlight();
-            }
+            highlightBox.style.display = 'block';
+            highlightBox.style.width = `${width}px`;
+            highlightBox.style.height = `${height}px`;
+            highlightBox.style.left = `${left}px`;
+            highlightBox.style.top = `${top}px`;
+            tutorialOverlay.classList.add('active');
         } else {
-            // If there's no target for highlighting, hide the highlight
+            // If no targeted elements found, hide the highlight
             removeHighlight();
         }
+    } else {
+        // If there's no target for highlighting, hide the highlight
+        removeHighlight();
     }
-    
+}
+ 
+window.addEventListener('resize', () => {
+    if (tutorialOverlay.style.display === 'flex') {
+        highlightCurrentStep();
+    }
+});
+   
     function removeHighlight() {
         highlightBox.style.display = 'none';
         tutorialOverlay.classList.remove('active');
@@ -2479,9 +2542,6 @@ function updateTutorialTranslation() {
     // Function to highlight elements based on tutorial steps is already handled in highlightCurrentStep()
     
     </script>
-    
-    <!-- Highlight Box -->
-    <div id="highlightBox" class="highlight" style="display:none;"></div>
     
     <!-- Three.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
