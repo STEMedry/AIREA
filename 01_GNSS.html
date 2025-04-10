@@ -5,23 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GNSS Satellite Positioning of Drone</title>
     <style>
-        /* Existing CSS styles remain unchanged */
+        /* Ensure full height for html and body */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body as a flex container */
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;  /* Center horizontally */
-            min-height: 100vh;  /* Full viewport height */
+            min-height: 100vh;    /* Full viewport height */
+            padding: 10px;
             box-sizing: border-box;
         }
+
         h1 {
             text-align: center;
             margin: 0 0 5px 0;
             width: 100%;
             font-size: 24px;
         }
+
         .header-container {
             display: flex;
             justify-content: space-between;
@@ -38,44 +47,57 @@
             align-items: center;
         }
 
+        /* Main container */
         .container {
             display: flex;
-            flex-direction: row; /* Keep left and right side by side */
+            flex-direction: row; /* Side by side layout */
             gap: 10px;
             align-items: flex-start;
-            width: 100%;  /* Full width */
-            max-width: 1200px;  /* Set a maximum width */
-            margin: 0 auto;  /* Center container */
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
             box-sizing: border-box;
+            flex: 1; /* Allow to grow and fill available space */
         }
+
+        /* Left panel */
         .left-panel {
             display: flex;
             flex-direction: column;
-            flex: 2;  /* Adjust as needed */
+            flex: 2;            /* Adjust relative to .right-panel */
             gap: 10px;
             box-sizing: border-box;
         }
+
+        /* Visualization area */
         .visualization {
             position: relative;
-            height: 600px; 
+            flex: 1;            /* Allow it to grow and fill space */
             width: 100%;
             box-sizing: border-box;
+            aspect-ratio: 1 / 1; /* Maintain square aspect ratio */
         }
+
+        /* Canvas styling */
         canvas {
             border: 1px solid #000;
             cursor: grab;
             touch-action: none;
-            height: 100%;  /* Fill the container */
-            width: 100%;  /* Fill the container */
+            height: 100%;       /* Fill the container */
+            width: 100%;        /* Fill the container */
         }
+
         canvas:active {
             cursor: grabbing;
         }
+
+        /* Table Styling */
         table {
             border-collapse: collapse;
             width: 100%;
             table-layout: fixed;
         }
+
         th, td {
             border: 1px solid #ddd;
             padding: 2px;  /* Reduced padding */
@@ -87,13 +109,16 @@
             white-space: nowrap;
             box-sizing: border-box;
         }
+
         th {
             background-color: #f2f2f2;
         }
+
         .sat-x, .sat-y {
             width: 50px;
             text-align: center;
         }
+
         .distance-display {
             background-color: #f8f8f8;
             padding: 5px;
@@ -105,14 +130,17 @@
             white-space: nowrap;
             box-sizing: border-box;
         }
+
+        /* Right panel */
         .right-panel {
-            flex: 1;  /* Allocate appropriate space */
+            flex: 1;            /* Allocate appropriate space */
             display: flex;
             flex-direction: column;
             gap: 10px;
             box-sizing: border-box;
         }
 
+        /* Button Styling */
         button {
             padding: 5px 10px;
             cursor: pointer;
@@ -170,6 +198,7 @@
             font-size: 12px;
             box-sizing: border-box;
         }
+
         .button-row {
             display: flex;
             gap: 10px;
@@ -177,11 +206,13 @@
             flex-wrap: wrap;
             box-sizing: border-box;
         }
+
         .satellite-table {
             max-height: none;
             overflow-y: visible;
             box-sizing: border-box;
         }
+
         .signal-counter {
             position: absolute;
             top: 5px;
@@ -193,6 +224,7 @@
             font-size: 14px;
             box-sizing: border-box;
         }
+
         @media (max-width: 1200px) {
             .container {
                 flex-direction: column;
@@ -207,15 +239,19 @@
                 width: 100%;
             }
         }
+
         .satellite-detected {
             background-color: yellow;
         }
+
         .triangle-detected {
             background-color: lightgreen;
         }
+
         .triangle-detected.clicked {
             background-color: orange !important;
         }
+
         .langButton {
             background-color: #4CAF50;
             font-weight: bold;
@@ -227,11 +263,11 @@
             border-radius: 4px;
             transition: background-color 0.3s;
         }
-        
+
         .langButton:hover {
             background-color: #90EE90;
         }
-        
+
         .back-button {
             background-color: #0750ed;
             font-weight: bold;
@@ -248,7 +284,7 @@
             box-sizing: border-box;
             transition: background-color 0.3s;
         }
-        
+
         .back-button:hover {
             background-color: #0f28b8;
         }
@@ -279,7 +315,7 @@
             color: white; /* White text for contrast */
             transition: background-color 0.3s; /* Smooth transition */
         }
-        
+
         #showAllSatellitesButton:hover {
             background-color: darkorange; /* Darker orange on hover */
         }
@@ -399,7 +435,7 @@
 <div class="container">
     <div class="left-panel">
         <div class="visualization">
-            <canvas id="trilaterationCanvas" width="800" height="800"></canvas>
+            <canvas id="trilaterationCanvas"></canvas>
             <div class="signal-counter" id="signalCounter">Satellites in range: 0</div>
         </div>
         
@@ -565,9 +601,9 @@
             const ctx = canvas.getContext('2d');
             let droneX = 0, droneY = 0;
             let isDragging = false;
-            let scale = canvas.width / 100;
-            let offsetX = canvas.width / 2;
-            let offsetY = canvas.height / 2;
+            let scale = 1; // Will be updated based on canvas size
+            let offsetX = 0;
+            let offsetY = 0;
 
             const DEFAULT_STATES = {
                 dronePosition: {
@@ -889,7 +925,7 @@
                     isDragging = true;
                     canvas.style.cursor = 'grabbing';
                 }
-            });
+            }, { passive: false });
 
             function handleMove(e) {
                 if (isDragging) {
