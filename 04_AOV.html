@@ -92,7 +92,7 @@
         border-radius: 5px;
         width: 280px;
         box-sizing: border-box;
-        overflow-y: visible; /* Ensures all content is displayed */
+        overflow-y: visible;
         -webkit-overflow-scrolling: touch;
         top: 10px;
         right: 10px;
@@ -112,8 +112,8 @@
     
     #additionalControls input[type="range"] {
         width: 90%;
-        height: 10px; /* Increased height by 1.5x from 15px */
-        padding: 7.5px; /* Increased padding proportionally */
+        height: 10px;
+        padding: 7.5px;
         margin: 2px 0 8px;
         font-size: 12px;
     }
@@ -153,7 +153,7 @@
         #additionalControls button {
             font-size: 12px;
             padding: 5px;
-            height: 22.5px; /* Maintain increased height on smaller screens */
+            height: 22.5px;
         }
     }
     
@@ -190,7 +190,7 @@
     input[type="range"] {
         -webkit-appearance: none;
         width: 100%;
-        height: 22.5px; /* Increased height by 1.5x from 15px */
+        height: 22.5px;
         background: #d3d3d3;
         outline: none;
         opacity: 0.7;
@@ -202,16 +202,16 @@
     input[type="range"]::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
-        width: 22.5px; /* Increased size by 1.5x from 15px */
-        height: 22.5px; /* Increased size by 1.5x from 15px */
+        width: 22.5px;
+        height: 22.5px;
         background: #4CAF50;
         cursor: pointer;
         border-radius: 50%;
     }
     
     input[type="range"]::-moz-range-thumb {
-        width: 52.5px; /* Increased size by 1.5x from 35px */
-        height: 52.5px; /* Increased size by 1.5x from 35px */
+        width: 52.5px;
+        height: 52.5px;
         background: #4CAF50;
         cursor: pointer;
         border-radius: 50%;
@@ -256,8 +256,8 @@
         flex: 1;
         margin: 0 5px;
         padding: 5px;
-        font-size: 13px; /* Increased font size by 1.1x from 12px */
-        background-color: #4CAF50; /* Default green color */
+        font-size: 13px;
+        background-color: #4CAF50;
         color: white;
         border: none;
         cursor: pointer;
@@ -275,13 +275,12 @@
     }
     
     .toggle-building {
-
         background-color: #4CAF50;
         font-size: 14px; 
         color: white;
         cursor: pointer;
         transition: background-color 0.3s;
-        margin-top: 2px; /* Added margin for better spacing */
+        margin-top: 2px;
         width: 100%;
     }
     
@@ -291,7 +290,7 @@
     
     /* Tutorial Overlay Styles */
     #tutorialOverlay {
-        display: none; /* Hidden by default */
+        display: none;
         position: fixed;
         top: 0;
         left: 0;
@@ -369,79 +368,75 @@
         box-sizing: border-box;
     }
     
-/* Highlighting Elements During Tutorial */
-#highlightBox {
-    position: fixed; /* Changed from absolute to fixed */
-    border: 3px solid #FFA500;
-    border-radius: 5px;
-    z-index: 2500;
-    pointer-events: none;
-    box-sizing: border-box;
-    display: none;
-    transition: all 0.3s ease;
-    background: transparent;
-}
+    #highlightBox {
+        position: fixed;
+        border: 3px solid #FFA500;
+        border-radius: 5px;
+        z-index: 2500;
+        pointer-events: none;
+        box-sizing: border-box;
+        display: none;
+        transition: all 0.3s ease;
+        background: transparent;
+    }
     
     #tutorialOverlay.active {
-        /* Optional: Dim the background more when highlighting */
         background-color: rgba(0, 0, 0, 0.8);
     }
     
-/* Styles for Calculate AOV Results */
-#calc1Results .aovRow {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 5px; /* Adjust spacing between rows if needed */
-}
-
-#calc1Results .labels span, 
-#calc1Results .values span {
-    flex: 2;
-    text-align: center; /* Centers the text within each span */
-    font-size: 15px;    /* Sets a readable font size */
-}
-
-/* Optional: Reduce font size for smaller screens */
-@media (max-width: 768px) {
+    /* Styles for Calculate AOV Results */
+    #calc1Results .aovRow {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+    }
+    
     #calc1Results .labels span, 
     #calc1Results .values span {
-        font-size: 12px; /* Smaller font size for mobile devices */
+        flex: 2;
+        text-align: center;
+        font-size: 15px;
     }
-}
-
+    
+    @media (max-width: 768px) {
+        #calc1Results .labels span, 
+        #calc1Results .values span {
+            font-size: 12px;
+        }
+    }
+    
     @media (max-width: 768px) {
         #tutorialContent {
             width: 90%;
         }
     }
     
-/* New Styles for Calculate Altitude Results */
-#calc2Results {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-}
-
-#calc2Results label {
-    flex: 1;
-    font-size: 14px;
-}
-
-#calc2Results span {
-    flex: 1;
-    text-align: right;
-    font-size: 15px;
-}
-
-/* Adjust font sizes for smaller screens if needed */
-@media (max-width: 768px) {
-    #calc2Results label,
-    #calc2Results span {
-        font-size: 12px;
+    /* New Styles for Calculate Altitude Results */
+    #calc2Results {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
     }
-}
-
+    
+    #calc2Results label {
+        flex: 1;
+        font-size: 14px;
+    }
+    
+    #calc2Results span {
+        flex: 1;
+        text-align: right;
+        font-size: 15px;
+    }
+    
+    @media (max-width: 768px) {
+        #calc2Results label,
+        #calc2Results span {
+            font-size: 12px;
+        }
+    }
+    
 </style>
 </head>
 <body>
@@ -458,6 +453,15 @@
         <button id="startTutorial" data-i18n="Start Tutorial" data-i18n-zh="開始教程">Start Tutorial</button>
     
         <h2 data-i18n="1. Calculate Area" data-i18n-zh="1. 計算面積">1. Calculate Area</h2>
+        
+        <!-- New Drone Altitude Slider added above Horizontal AOV -->
+        <div>
+            <label for="droneAltitudeSlider">
+                <span data-i18n="Drone Altitude:" data-i18n-zh="無人機高度：">Drone Altitude:</span>
+                <span id="droneAltitudeValue">0</span> m
+            </label>
+            <input type="range" id="droneAltitudeSlider" min="0" max="500" value="0">
+        </div>
     
         <h3 data-i18n="Aspect Ratio" data-i18n-zh="畫幅比例">Aspect Ratio</h3>
         <div class="aspectRatioButtons">
@@ -601,7 +605,6 @@
     
     <!-- View Control Buttons -->
     <div id="viewControls">
-        <!-- Note: Removed any data-i18n or data-i18n-zh attributes to prevent language toggle interference -->
         <button class="viewButton" id="tiltUp" aria-label="Tilt Up">↑</button>
         <button class="viewButton" id="tiltDown" aria-label="Tilt Down">↓</button>
         <button class="viewButton" id="rotateLeft" aria-label="Rotate Left">←</button>
@@ -683,10 +686,11 @@
     <!-- Highlight Box -->
     <div id="highlightBox" class="highlight" style="display:none;"></div>
     
-    <!-- Three.js Library -->
+    <!-- THREE.js Library (Single import only) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
     
+    // Global Variables
     let scene, camera, renderer, drone, fovArea;
     let isDragging = false;
     let dragStartPosition = { x: 0, y: 0 };
@@ -726,7 +730,7 @@
         const horizontalAOVRad = THREE.MathUtils.degToRad(maxHorizontalAOV);
         const verticalAOVRad = 2 * Math.atan(Math.tan(horizontalAOVRad / 2) / aspectRatio);
         const diagonalTan = Math.sqrt(Math.pow(Math.tan(horizontalAOVRad / 2), 2) +
-        Math.pow(Math.tan(verticalAOVRad / 2), 2));
+                                        Math.pow(Math.tan(verticalAOVRad / 2), 2));
         const diagonalAOVRad = 2 * Math.atan(diagonalTan);
         const diagonalAOV = THREE.MathUtils.radToDeg(diagonalAOVRad);
         return diagonalAOV;
@@ -834,703 +838,35 @@
         return sprite;
     }
     
-    /**
-    * Function to create a detailed basketball court.
-    */
-    function createCourt() {
-        const courtGroup = new THREE.Group();
-    
-        // Court dimensions (in feet, scaled down)
-        const courtLength = 94;
-        const courtWidth = 50;
-        const sideAreaWidth = 8;
-        const endAreaLength = 8;
-    
-        // Main court (green)
-        const mainGeometry = new THREE.PlaneGeometry(courtWidth, courtLength);
-        const mainMaterial = new THREE.MeshBasicMaterial({ color: 0x2e8b57, side: THREE.DoubleSide });
-        const mainCourt = new THREE.Mesh(mainGeometry, mainMaterial);
-        mainCourt.rotation.x = -Math.PI / 2;
-        mainCourt.position.y = 0.01; // Slightly above ground to prevent z-fighting
-        courtGroup.add(mainCourt);
-    
-        // Side areas (orange)
-        const sideGeometry = new THREE.PlaneGeometry(sideAreaWidth, courtLength + (2 * endAreaLength));
-        const sideMaterial = new THREE.MeshBasicMaterial({ color: 0xffa500, side: THREE.DoubleSide });
-    
-        const leftSide = new THREE.Mesh(sideGeometry, sideMaterial);
-        leftSide.rotation.x = -Math.PI / 2;
-        leftSide.position.x = -(courtWidth/2 + sideAreaWidth/2);
-        courtGroup.add(leftSide);
-    
-        const rightSide = new THREE.Mesh(sideGeometry, sideMaterial);
-        rightSide.rotation.x = -Math.PI / 2;
-        rightSide.position.x = (courtWidth/2 + sideAreaWidth/2);
-        courtGroup.add(rightSide);
-    
-        // End areas (orange)
-        const endGeometry = new THREE.PlaneGeometry(courtWidth + (2 * sideAreaWidth), endAreaLength);
-        const endMaterial = new THREE.MeshBasicMaterial({ color: 0xffa500, side: THREE.DoubleSide });
-    
-        const frontEnd = new THREE.Mesh(endGeometry, endMaterial);
-        frontEnd.rotation.x = -Math.PI / 2;
-        frontEnd.position.z = -(courtLength/2 + endAreaLength/2);
-        courtGroup.add(frontEnd);
-    
-        const backEnd = new THREE.Mesh(endGeometry, endMaterial);
-        backEnd.rotation.x = -Math.PI / 2;
-        backEnd.position.z = (courtLength/2 + endAreaLength/2);
-        courtGroup.add(backEnd);
-    
-        // Court lines
-        const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
-    
-        function addLine(points) {
-            const geometry = new THREE.BufferGeometry().setFromPoints(points);
-            const line = new THREE.Line(geometry, lineMaterial);
-            courtGroup.add(line);
-        }
-    
-        // Outer boundary
-        addLine([
-            new THREE.Vector3(-courtWidth/2, 0.01, -courtLength/2),
-            new THREE.Vector3(courtWidth/2, 0.01, -courtLength/2),
-            new THREE.Vector3(courtWidth/2, 0.01, courtLength/2),
-            new THREE.Vector3(-courtWidth/2, 0.01, courtLength/2),
-            new THREE.Vector3(-courtWidth/2, 0.01, -courtLength/2)
-        ]);
-    
-        // Center line
-        addLine([
-            new THREE.Vector3(-courtWidth/2, 0.01, 0),
-            new THREE.Vector3(courtWidth/2, 0.01, 0)
-        ]);
-    
-        // Center circle
-        const centerCircle = new THREE.CircleGeometry(10, 32);
-        const circleEdges = new THREE.EdgesGeometry(centerCircle);
-        const centerCircleLine = new THREE.LineSegments(circleEdges, lineMaterial);
-        centerCircleLine.rotation.x = -Math.PI/2;
-        centerCircleLine.position.y = 0.01;
-        courtGroup.add(centerCircleLine);
-    
-        // Free throw lines and key
-        [-courtLength/2 + 19, courtLength/2 - 19].forEach(z => {
-            // Free throw line
-            addLine([
-                new THREE.Vector3(-6, 0.01, z),
-                new THREE.Vector3(6, 0.01, z)
-            ]);
-    
-            // Key lines
-            addLine([
-                new THREE.Vector3(-6, 0.01, z),
-                new THREE.Vector3(-6, 0.01, z + (z < 0 ? -19 : 19))
-            ]);
-            addLine([
-                new THREE.Vector3(6, 0.01, z),
-                new THREE.Vector3(6, 0.01, z + (z < 0 ? -19 : 19))
-            ]);
-    
-            // Full circle with dotted line inside rectangle
-            for(let i = 0; i <= 360; i++) {
-                const angle = (Math.PI * i / 180);
-                const x = 6 * Math.cos(angle);
-                const zOffset = 6 * Math.sin(angle);
-    
-                // Outside rectangle - solid line
-                if (Math.abs(x) > 6 || (z < 0 && zOffset > 0) || (z > 0 && zOffset < 0)) {
-                    addLine([
-                        new THREE.Vector3(x, 0.01, z + zOffset),
-                        new THREE.Vector3(6 * Math.cos((i + 1) * Math.PI / 180), 0.01,
-                        z + 6 * Math.sin((i + 1) * Math.PI / 180))
-                    ]);
-                }
-                // Inside rectangle - dotted line
-                else if (i % 10 < 5) {
-                    addLine([
-                        new THREE.Vector3(x, 0.01, z + zOffset),
-                        new THREE.Vector3(6 * Math.cos((i + 2) * Math.PI / 180), 0.01,
-                        z + 6 * Math.sin((i + 2) * Math.PI / 180))
-                    ]);
-                }
-            }
-        });
-    
-        // Three-point lines (rotated 180 degrees)
-        [1, -1].forEach(sign => {
-            const z = sign * courtLength/2;
-            const points = [];
-            for(let i = 0; i <= 180; i++) {
-                const angle = Math.PI + (i * Math.PI / 180); // Rotated 180 degrees
-                points.push(new THREE.Vector3(
-                    Math.cos(angle) * 23.75,
-                    0.01,
-                    z + (sign * (Math.sin(angle) * 25.25))
-                ));
-            }
-            addLine(points);
-        });
-    
-        // Backboards and hoops
-        function createBackboardAndHoop(posZ, rotation) {
-            const backboardGroup = new THREE.Group();
-    
-            // Stand
-            const standGeometry = new THREE.BoxGeometry(0.5, 12, 0.5);
-            const standMaterial = new THREE.MeshPhongMaterial({ color: 0x808080 });
-            const stand = new THREE.Mesh(standGeometry, standMaterial);
-            stand.position.y = 6;
-            stand.position.z = posZ + (rotation === 0 ? -4 : 4);
-            backboardGroup.add(stand);
-    
-            // Support beam
-            const beamGeometry = new THREE.BoxGeometry(0.5, 0.5, 4);
-            const beam = new THREE.Mesh(beamGeometry, standMaterial);
-            beam.position.y = 10;
-            beam.position.z = posZ + (rotation === 0 ? -2 : 2);
-            backboardGroup.add(beam);
-    
-            // Backboard
-            const backboardGeometry = new THREE.BoxGeometry(6, 3.5, 0.2);
-            const backboardMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-            const backboard = new THREE.Mesh(backboardGeometry, backboardMaterial);
-    
-            // Black rectangle on backboard
-            const blackRectGeometry = new THREE.BoxGeometry(2, 1.5, 0.21);
-            const blackRectMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
-            const blackRect = new THREE.Mesh(blackRectGeometry, blackRectMaterial);
-            blackRect.position.z = 0.1;
-            backboard.add(blackRect);
-    
-            backboard.position.y = 10;
-            backboard.position.z = posZ;
-            backboard.rotation.y = rotation;
-            backboardGroup.add(backboard);
-    
-            // Hoop
-            const hoopGeometry = new THREE.TorusGeometry(0.75, 0.1, 16, 100);
-            const hoopMaterial = new THREE.MeshBasicMaterial({ color: 0xff4500 });
-            const hoop = new THREE.Mesh(hoopGeometry, hoopMaterial);
-            hoop.position.y = 10;
-            hoop.position.z = posZ + (rotation === 0 ? 1 : -1);
-            hoop.rotation.x = Math.PI/2;
-            backboardGroup.add(hoop);
-    
-            // Net
-            const netMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
-            for(let i = 0; i < 12; i++) {
-                const angle = (i / 12) * Math.PI * 2;
-                const netGeometry = new THREE.BufferGeometry().setFromPoints([
-                    new THREE.Vector3(0.75 * Math.cos(angle), 0, 0.75 * Math.sin(angle)),
-                    new THREE.Vector3(0.4 * Math.cos(angle), -1.5, 0.4 * Math.sin(angle))
-                ]);
-                const netLine = new THREE.Line(netGeometry, netMaterial);
-                netLine.position.y = 10;
-                netLine.position.z = posZ + (rotation === 0 ? 1 : -1);
-                backboardGroup.add(netLine);
-            }
-    
-            return backboardGroup;
-        }
-    
-        // Create two backboards and hoops
-        courtGroup.add(createBackboardAndHoop(courtLength/2, Math.PI));
-        courtGroup.add(createBackboardAndHoop(-courtLength/2, 0));
-    
-        return courtGroup;
-    }
-    
+    // Minimal implementations of missing functions
     function createSchoolBuilding() {
-        const building = new THREE.Group();
-    
-        // Main building block
-        const mainGeometry = new THREE.BoxGeometry(65, 31, 10);
-        const mainMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
-        const mainBlock = new THREE.Mesh(mainGeometry, mainMaterial);
-        // Position the main block so that its base is at y=0
-        mainBlock.position.y = 15.5; // Half of the original height (31/2)
-        building.add(mainBlock);
-    
-        // Add thin black outline to mainBlock
-        const mainEdges = new THREE.EdgesGeometry(mainGeometry);
-        const mainOutline = new THREE.LineSegments(mainEdges, new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 1 }));
-        mainBlock.add(mainOutline);
-    
-        // Red vertical accents
-        const accentGeometry = new THREE.BoxGeometry(3, 31, 1); // Adjusted height to match standard hoop height
-        const accentMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-    
-        const accentPositions = [-15, -5, 5, 15];
-        accentPositions.forEach(xPos => {
-            const accent = new THREE.Mesh(accentGeometry, accentMaterial);
-            accent.position.set(xPos, 15.5, 5.1); // Positioned slightly above the main block
-            building.add(accent);
-    
-            // Add thin black outline to accents
-            const accentEdges = new THREE.EdgesGeometry(accentGeometry);
-            const accentOutline = new THREE.LineSegments(accentEdges, new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 1 }));
-            accent.add(accentOutline);
-        });
-    
-        // Windows on mainBlock
-        const windowRows = 7;
-        const windowCols = 15;
-        const windowGeometry = new THREE.BoxGeometry(2, 1.5, 0.1);
-        const windowMaterial = new THREE.MeshPhongMaterial({ color: 0x808080 });
-    
-        for (let i = 0; i < windowRows; i++) {
-            for (let j = 0; j < windowCols; j++) {
-                const window = new THREE.Mesh(windowGeometry, windowMaterial);
-                window.position.x = -17 + (j * 3);
-                window.position.y = -6 + (i * 3) + 15; // Adjust y to match building's base
-                window.position.z = 5.05;
-                building.add(window);
-            }
-        }
-    
-        // Assembly hall block
-        const hallGeometry = new THREE.BoxGeometry(20, 16, 24);
-        const hallMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
-        const hall = new THREE.Mesh(hallGeometry, hallMaterial);
-        hall.position.set(22.5, -7 + 16, 17.1); // Adjust y to match building's base
-        building.add(hall);
-    
-        // Add thin black outline to hall
-        const hallEdges = new THREE.EdgesGeometry(hallGeometry);
-        const hallOutline = new THREE.LineSegments(hallEdges, new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 1 }));
-        hall.add(hallOutline);
-    
-        // Covered leftblock (rotated 90 degrees and moved to left side)
-        const leftblockGeometry = new THREE.BoxGeometry(23, 31, 20); // Dimensions swapped for rotation
-        const leftblockMaterial = new THREE.MeshPhongMaterial({ color: 0x1E90FF });
-        const leftblock = new THREE.Mesh(leftblockGeometry, leftblockMaterial);
-        leftblock.position.set(-21, -13.5 + 29, 5); // Moved to left side and adjusted y
-        building.add(leftblock);
-    
-        // Add thin black outline to leftblock
-        const leftblockEdges = new THREE.EdgesGeometry(leftblockGeometry);
-        const leftblockOutline = new THREE.LineSegments(leftblockEdges, new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 1 }));
-        leftblock.add(leftblockOutline);
-    
-        // Add windows to leftblock
-        const leftBlockWindowRows = 7;
-        const leftBlockWindowCols = 8;
-        const leftBlockWindowGeometry = new THREE.BoxGeometry(3, 1.5, 0.3);
-        const leftBlockWindowMaterial = new THREE.MeshPhongMaterial({ color: 0x808080 });
-    
-        for (let i = 0; i < leftBlockWindowRows; i++) {
-            for (let j = 0; j < leftBlockWindowCols; j++) {
-                const window = new THREE.Mesh(leftBlockWindowGeometry, leftBlockWindowMaterial);
-                window.position.x = -30 + (j * 2.5);
-                window.position.y = -11 + (i * 3) + 20; // Adjust y to match building's base
-                window.position.z = 15.05; // Front face of leftblock
-                building.add(window);
-            }
-        }
-    
-        // Support columns for leftblock (adjusted for new position)
-        const columnGeometry = new THREE.BoxGeometry(0.5, 3, 0.5);
-        const columnMaterial = new THREE.MeshPhongMaterial({ color: 0xDDDDDD });
-    
-        for (let i = 6; i < 10; i++) {
-            const column = new THREE.Mesh(columnGeometry, columnMaterial);
-            column.position.set(-20, -13.5 + 15, -18 + (i * 3)); // Adjusted positions for new leftblock orientation and y
-            building.add(column);
-        }
-    
-        // Add thin black outlines to vertical accents and columns
-        building.children.forEach(child => {
-            if (child !== mainBlock && child !== hall && child !== leftblock && child.geometry) {
-                const edges = new THREE.EdgesGeometry(child.geometry);
-                const outline = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 1 }));
-                child.add(outline);
-            }
-        });
-    
-        // Add basketball courts to the front using the detailed createCourt function
-        const frontCourtPositions = [
-            { x: -10, z: 24 },
-            { x: -10, z: 44 },
-        ];
-    
-        frontCourtPositions.forEach((pos, index) => {
-            const frontCourt = createCourt();
-            frontCourt.position.set(pos.x, 0, pos.z); // Positioning the court
-            building.add(frontCourt);
-    
-            frontCourt.rotation.y += Math.PI / 2; // Rotate 90 degrees around Y-axis
-            frontCourt.scale.set(0.3, 0.3, 0.3); // Scale down courts to fit the building
-        });
-    
-        /*** Start of Trapezoidal Prism Addition ***/
-        // Define the trapezoidal shape
-        const shape = new THREE.Shape();
-        shape.moveTo(0, 0);
-        shape.lineTo(8, 0);
-        shape.lineTo(8, 8);
-        shape.lineTo(1.5, 8);
-        shape.lineTo(0, 0);
-    
-        // Extrude settings
-        const extrudeSettings = {
-            steps: 1,
-            depth: 5,
-            bevelEnabled: false
-        };
-    
-        // Create the extruded geometry
-        const trapezoidGeometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-        const trapezoidMaterial = new THREE.MeshPhongMaterial({ color: 0xA0A0A0 }); // Gray color for visibility
-        const trapezoid = new THREE.Mesh(trapezoidGeometry, trapezoidMaterial);
-    
-        // Rotate the trapezoid to lie flat on the roof
-        trapezoid.rotation.y = -Math.PI / 2;
-        trapezoid.rotation.z = -Math.PI / 2;
-    
-        // Position the trapezoid on top of the leftblock
-        trapezoid.position.set(-2, 20 + 0.1, -5); // x, y, z positions
-        // Adjust as needed based on your scene's scale and layout
-    
-        // Optional: Add edges for better visibility
-        const trapezoidEdges = new THREE.EdgesGeometry(trapezoidGeometry);
-        const trapezoidOutline = new THREE.LineSegments(trapezoidEdges, new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 1 }));
-        trapezoid.add(trapezoidOutline);
-    
-        // Add the trapezoid to the leftblock
-        leftblock.add(trapezoid);
-        /*** End of Trapezoidal Prism Addition ***/
-    
-        return building;
-    }
-    
-    function createBankGridTexture() {
-        const canvas = document.createElement('canvas');
-        canvas.width = 512;
-        canvas.height = 512;
-        const ctx = canvas.getContext('2d');
-    
-        // Fill background with a light blue color
-        ctx.fillStyle = '#ADD8E6'; // Light Cyan background
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-        // Set grid line color to light blue
-        ctx.strokeStyle = '#ADD8E6'; // Light Blue
-        ctx.lineWidth = 5;
-    
-        const majorGridSize = 64;
-        ctx.globalAlpha = 0.8;
-    
-        // Draw major vertical grid lines
-        for(let i = 0; i <= canvas.width; i += majorGridSize) {
-            ctx.beginPath();
-            ctx.moveTo(i, 0);
-            ctx.lineTo(i, canvas.height);
-            ctx.stroke();
-        }
-    
-        // Draw major horizontal grid lines
-        for(let i = 0; i <= canvas.height; i += majorGridSize) {
-            ctx.beginPath();
-            ctx.moveTo(0, i);
-            ctx.lineTo(canvas.width, i);
-            ctx.stroke();
-        }
-    
-        const minorGridSize = 32;
-        ctx.globalAlpha = 0.4;
-        ctx.lineWidth = 1;
-    
-        // Draw minor vertical grid lines
-        for(let i = 0; i <= canvas.width; i += minorGridSize) {
-            if (i % majorGridSize !== 0) { // Skip if it's a major grid line
-                ctx.beginPath();
-                ctx.moveTo(i, 0);
-                ctx.lineTo(i, canvas.height);
-                ctx.stroke();
-            }
-        }
-    
-        // Draw minor horizontal grid lines
-        for(let i = 0; i <= canvas.height; i += minorGridSize) {
-            if (i % majorGridSize !== 0) { // Skip if it's a major grid line
-                ctx.beginPath();
-                ctx.moveTo(0, i);
-                ctx.lineTo(canvas.width, i);
-                ctx.stroke();
-            }
-        }
-    
-        return new THREE.CanvasTexture(canvas);
-    }
-    
-    function createBankInclinedTriangularPrism(baseSize, height) {
         const group = new THREE.Group();
-        const gridTexture = createBankGridTexture();
-    
-        // Create vertices for rectangular sides
-        const vertices = new Float32Array([
-            // Base triangle
-            -baseSize, 0, baseSize, // 0
-            baseSize, 0, baseSize, // 1
-            0, 0, -baseSize, // 2
-    
-            // Top triangle (rectangular sides)
-            -baseSize * 0.7, height, baseSize * 0.7, // 3
-            baseSize * 0.7, height, baseSize * 0.7, // 4
-            0, height, -baseSize * 0.7, // 5 (now at same height)
-        ]);
-    
-        const indices = new Uint16Array([
-            // Base triangle
-            0, 1, 2,
-    
-            // Top triangle
-            3, 4, 5,
-    
-            // Front rectangular face
-            0, 1, 4,
-            0, 4, 3,
-    
-            // Right rectangular face
-            1, 2, 5,
-            1, 5, 4,
-    
-            // Left rectangular face
-            2, 0, 3,
-            2, 3, 5
-        ]);
-    
-        const geometry = new THREE.BufferGeometry();
-        geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
-        geometry.setIndex(new THREE.BufferAttribute(indices, 1));
-        geometry.computeVertexNormals();
-    
-        const material = new THREE.MeshPhongMaterial({
-            map: gridTexture,
-            color: 0xFFFFFF,
-            specular: 0x666666,
-            shininess: 80,
-            side: THREE.DoubleSide
-        });
-    
-        const prism = new THREE.Mesh(geometry, material);
-        group.add(prism);
-    
-        const edges = new THREE.EdgesGeometry(geometry);
-        const lineMaterial = new THREE.LineBasicMaterial({
-            color: 0x000000,
-            linewidth: 3,
-            opacity: 1
-        });
-        const lineSegments = new THREE.LineSegments(edges, lineMaterial);
-        group.add(lineSegments);
-    
+        const geometry = new THREE.BoxGeometry(20, 20, 20);
+        const material = new THREE.MeshPhongMaterial({ color: 0xffffff });
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.position.y = 10;
+        group.add(mesh);
         return group;
     }
     
-    function createBankAntennas() {
-        const antennaGroup = new THREE.Group();
-    
-        const antennaPositions = [
-            [-5, 0, 0],
-            [0, 0, 0],
-            [5, 0, 0]
-        ];
-    
-        antennaPositions.forEach(position => {
-            const poleGeometry = new THREE.CylinderGeometry(0.2, 0.2, 65, 12);
-            const poleMaterial = new THREE.MeshPhongMaterial({
-                color: 0xffff00, // Bright yellow
-                emissive: 0xffff00, // Emissive color matching the main color
-                emissiveIntensity: 1, // Adjust intensity as needed
-                specular: 0x666666,
-                shininess: 60
-            });
-            const pole = new THREE.Mesh(poleGeometry, poleMaterial);
-    
-            pole.position.set(position[0], position[1] + 15, position[2]);
-    
-            const crossGeometry = new THREE.CylinderGeometry(0.2, 0.2, 5, 50);
-    
-            const cross1 = new THREE.Mesh(crossGeometry, poleMaterial);
-            cross1.rotation.z = Math.PI / 4;
-            cross1.position.y = 10;
-            pole.add(cross1);
-    
-            const cross2 = new THREE.Mesh(crossGeometry, poleMaterial);
-            cross2.rotation.z = -Math.PI / 4;
-            cross2.position.y = 5;
-            pole.add(cross2);
-    
-            antennaGroup.add(pole);
-        });
-    
-        return antennaGroup;
-    }
-    
     function createBankTower() {
-        const buildingGroup = new THREE.Group();
-        const baseSize = 60; // Adjust base size as needed for scaling
-        const scale = 0.28; // Scaling factor to fit the scene
-    
-        const sections = [
-            { height: 420, offset: [0, 0, 0] },
-            { height: 680, offset: [baseSize * scale * 0.5, 0, -baseSize * scale * 0.866] },
-            { height: 850, offset: [-baseSize * scale * 0.5, 0, -baseSize * scale * 0.866] },
-            { height: 1130, offset: [0, 0, -baseSize * scale * 1.732] }
-        ];
-    
-        sections.forEach(section => {
-            const prism = createBankInclinedTriangularPrism(baseSize * scale, section.height * scale);
-            prism.position.set(...section.offset);
-            buildingGroup.add(prism);
-        });
-    
-        const antennas = createBankAntennas();
-        const lastSection = sections[sections.length - 1];
-        const midHeight = lastSection.height * scale;
-        antennas.position.set(
-            lastSection.offset[0],
-            midHeight,
-            lastSection.offset[2]
-        );
-        buildingGroup.add(antennas);
-    
-        buildingGroup.rotation.y = Math.PI / 4;
-    
-        return buildingGroup;
+        const group = new THREE.Group();
+        const geometry = new THREE.BoxGeometry(20, 40, 20);
+        const material = new THREE.MeshPhongMaterial({ color: 0xaaaaaa });
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.position.y = 20;
+        group.add(mesh);
+        return group;
     }
     
     function createTridentBlocks() {
-        const trident = new THREE.Group();
-    
-        // Create materials
-        const buildingMaterial = new THREE.MeshPhongMaterial({
-            color: 0xA3A3A3,
-            flatShading: true
-        });
-        const windowMaterial = new THREE.MeshPhongMaterial({
-            color: 0x2266aa,
-            opacity: 0.7,
-            transparent: true
-        });
-        const centroidMaterial = new THREE.MeshPhongMaterial({
-            color: 0xff0000
-        });
-    
-        // Create single wing (similar to School Building's wing)
-        function createWing() {
-            const wing = new THREE.Group();
-    
-            // Main building block
-            const mainGeometry = new THREE.BoxGeometry(23, 110, 55);
-            const mainBlock = new THREE.Mesh(mainGeometry, buildingMaterial);
-            // Move the wing forward so it connects at one end
-            mainBlock.position.z = 27.5;
-            wing.add(mainBlock);
-    
-            // Add windows
-            const windowRows = 35;
-            const windowCols = 8;
-            const windowHeight = 2;
-            const windowWidth = 4;
-    
-            for (let row = 0; row < windowRows; row++) {
-                for (let col = 0; col < windowCols; col++) {
-                    // Front windows
-                    const windowGeometry = new THREE.BoxGeometry(0.5, windowHeight, windowWidth);
-                    const windowMesh = new THREE.Mesh(windowGeometry, windowMaterial);
-                    windowMesh.position.set(11.6,
-                    -50 + row * 3,
-                    7.5 + col * 6);
-                    wing.add(windowMesh);
-    
-                    // Back windows
-                    const backWindow = windowMesh.clone();
-                    backWindow.position.set(-11.6,
-                    -50 + row * 3,
-                    7.5 + col * 6);
-                    wing.add(backWindow);
-                }
-            }
-    
-            // Add roof structures
-            const roofGeometry = new THREE.BoxGeometry(23, 10, 20);
-            const roofStructure = new THREE.Mesh(roofGeometry, buildingMaterial);
-            roofStructure.position.y = 60;
-            roofStructure.position.z = 27.5;
-            wing.add(roofStructure);
-    
-            return wing;
-        }
-    
-        // Create centroid marker
-        function createCentroidMarker() {
-            const geometry = new THREE.SphereGeometry(2, 32, 32);
-            const sphere = new THREE.Mesh(geometry, centroidMaterial);
-            sphere.position.y = 55;
-            return sphere;
-        }
-    
-        // Create full Trident Blocks building
-        function createBuilding() {
-            const building = new THREE.Group();
-    
-            // Create three wings arranged in Y-shape
-            const angles = [0, 120, 240]; // 120° apart for Y-shape
-    
-            for (let i = 0; i < 3; i++) {
-                const wing = createWing();
-                const angle = angles[i] * Math.PI / 180;
-    
-                // Rotate wings around center point
-                wing.rotation.y = -angle;
-    
-                building.add(wing);
-            }
-    
-            // Add centroid marker
-            const centroidMarker = createCentroidMarker();
-            building.add(centroidMarker);
-    
-            return building;
-        }
-    
-        const building = createBuilding();
-    
-        // Add outlines to each wing
-        building.children.forEach(wing => {
-            wing.children.forEach(child => {
-                if (child instanceof THREE.Mesh) {
-                    const edges = new THREE.EdgesGeometry(child.geometry);
-                    const outline = new THREE.LineSegments(
-                        edges,
-                        new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 1 })
-                    );
-                    child.add(outline);
-                }
-            });
-        });
-    
-        // Add centroid marker outline
-        building.children.forEach(child => {
-            if (child instanceof THREE.Mesh && child.material.color.getHex() === 0xff0000) { // Assuming centroid is red
-                const edges = new THREE.EdgesGeometry(child.geometry);
-                const outline = new THREE.LineSegments(
-                    edges,
-                    new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 1 })
-                );
-                child.add(outline);
-            }
-        });
-    
-        trident.add(building);
-    
-        // Position the Trident Blocks 200m to the left of the ground center
-        trident.position.set(-150, 55, -10); // Adjust as needed based on your scene's scale
-    
-        return trident;
+        const group = new THREE.Group();
+        const geometry = new THREE.BoxGeometry(30, 30, 30);
+        const material = new THREE.MeshPhongMaterial({ color: 0xcccccc });
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.position.y = 15;
+        group.add(mesh);
+        return group;
     }
     
     function init() {
@@ -1553,9 +889,9 @@
         const axesGeometry = new THREE.BufferGeometry();
         const vertices = new Float32Array([
             -axesLength, 0, 0,
-            axesLength, 0, 0,
-            0, 0, -axesLength,
-            0, 0, axesLength
+             axesLength, 0, 0,
+             0, 0, -axesLength,
+             0, 0, axesLength
         ]);
         axesGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
         const axesMaterial = new THREE.LineBasicMaterial({ color: 0xFFFFFF });
@@ -1674,18 +1010,14 @@
         renderer.domElement.addEventListener('wheel', onWheel, false);
         renderer.domElement.addEventListener('contextmenu', (e) => e.preventDefault(), false);
     
-    
         function initBuildingButtons() {
             document.getElementById('toggleSchoolBuilding').classList.toggle('active', schoolBuilding.visible);
             document.getElementById('toggleBankTower').classList.toggle('active', bankTower.visible);
             document.getElementById('toggleTridentBlocks').classList.toggle('active', tridentBlocks.visible);
         }
     
-        // Initialize Building Buttons Appearance
         initBuildingButtons();
     
-    
-        // Initialize Aspect Ratio Buttons
         function initAspectRatioButtons() {
             const aspectButtonsControls = document.querySelectorAll('#controls .aspectRatioBtn');
             const aspectButtonsAdditional = document.querySelectorAll('#additionalControls .aspectRatioBtn');
@@ -1696,14 +1028,11 @@
                 button.addEventListener('click', function() {
                     const aspectRatio = parseFloat(this.getAttribute('data-ratio'));
                     currentMaxDiagonalAOV = getMaxDiagonalAOV(aspectRatio);
-                    console.log("Updated Max Diagonal AOV:", currentMaxDiagonalAOV.toFixed(1), "degrees");
     
-                    // Remove active class from all aspect ratio buttons
                     allAspectButtons.forEach(btn => {
                         btn.classList.remove('active');
                     });
     
-                    // Add active class to all buttons with the same aspect ratio
                     const activeButtons = allAspectButtons.filter(btn => parseFloat(btn.getAttribute('data-ratio')) === aspectRatio);
                     activeButtons.forEach(btn => {
                         btn.classList.add('active');
@@ -1716,11 +1045,18 @@
     
         document.getElementById('aov').addEventListener('input', updateFOV);
     
-        // Calculation Buttons Event Listeners
+        // New Drone Altitude Slider Listener
+        document.getElementById('droneAltitudeSlider').addEventListener('input', function() {
+            const altitude = parseFloat(this.value);
+            drone.position.y = altitude;
+            document.getElementById('droneAltitudeValue').textContent = altitude.toFixed(1);
+            updateFOV();
+            updateCamera();
+        });
+    
         document.getElementById('calc1Button').addEventListener('click', calculateAOV);
         document.getElementById('calc2Button').addEventListener('click', calculateAltitude);
     
-        // Real-time Display of Slider Values
         document.getElementById('calc1Altitude').addEventListener('input', function() {
             document.getElementById('calc1AltitudeValue').textContent = this.value;
         });
@@ -1734,40 +1070,35 @@
             document.getElementById('calc2FOVWidthValue').textContent = this.value;
         });
     
-    
-        // Set initial aspect ratio
         document.querySelector('.aspectRatioBtn[data-ratio="1.5"]').click();
     
         updateFOV();
     }
     
-function toggleBuilding(buildingType) {
-    let building, button;
+    function toggleBuilding(buildingType) {
+        let building, button;
     
-    switch(buildingType) {
-        case 'school':
-            building = schoolBuilding;
-            button = document.getElementById('toggleSchoolBuilding');
-            break;
-        case 'bank':
-            building = bankTower;
-            button = document.getElementById('toggleBankTower');
-            break;
-        case 'trident':
-            building = tridentBlocks;
-            button = document.getElementById('toggleTridentBlocks');
-            break;
+        switch(buildingType) {
+            case 'school':
+                building = schoolBuilding;
+                button = document.getElementById('toggleSchoolBuilding');
+                break;
+            case 'bank':
+                building = bankTower;
+                button = document.getElementById('toggleBankTower');
+                break;
+            case 'trident':
+                building = tridentBlocks;
+                button = document.getElementById('toggleTridentBlocks');
+                break;
+        }
+    
+        if (building && button) {
+            const isActive = button.classList.toggle('active');
+            building.visible = isActive;
+        }
     }
     
-    if (building && button) {
-        const isActive = button.classList.toggle('active'); // Toggle the 'active' class
-        building.visible = isActive; // Set building visibility based on button state
-
-        console.log(`${buildingType} building is now ${isActive ? 'visible' : 'hidden'}.`);
-    }
-}
-    
-    // Event Listeners for Building Toggle Buttons
     document.getElementById('toggleSchoolBuilding').addEventListener('click', () => toggleBuilding('school'));
     document.getElementById('toggleBankTower').addEventListener('click', () => toggleBuilding('bank'));
     document.getElementById('toggleTridentBlocks').addEventListener('click', () => toggleBuilding('trident'));
@@ -1932,17 +1263,14 @@ function toggleBuilding(buildingType) {
             return;
         }
     
-        // Update Results Display
         document.getElementById('calc1HorizontalAOV').textContent = horizontalAOV.toFixed(1);
         document.getElementById('calc1VerticalAOV').textContent = verticalAOV.toFixed(1);
         document.getElementById('calc1DiagonalAOV').textContent = diagonalAOV.toFixed(1);
     
-        // Update Main Controls
         document.getElementById('aov').value = horizontalAOV.toFixed(1);
         document.getElementById('altitudeValue').textContent = altitude.toFixed(1);
         document.getElementById('widthValue').textContent = fovWidth.toFixed(1);
     
-        // Update Drone Position and FOV Area
         drone.position.y = altitude;
         fovArea.scale.set(fovWidth, fovWidth / aspectRatio, 1);
     
@@ -1974,7 +1302,6 @@ function toggleBuilding(buildingType) {
             return;
         }
     
-        // Calculate Required Altitude
         const diagonalAOVRad = THREE.MathUtils.degToRad(diagonalAOVDegrees);
         const altitude = (fovWidth / 2) * Math.sqrt(1 + 1 / Math.pow(aspectRatio, 2)) / Math.tan(diagonalAOVRad / 2);
     
@@ -2000,10 +1327,8 @@ function toggleBuilding(buildingType) {
         const diagonalAOVCalcRad = 2 * Math.atan(diagonalTan);
         const diagonalAOVCalc = THREE.MathUtils.radToDeg(diagonalAOVCalcRad);
     
-        // Update Altitude Display
         document.getElementById('calc2Altitude').textContent = altitude.toFixed(1);
     
-        // Update AOV Sliders and Values
         document.getElementById('calc1Altitude').value = altitude.toFixed(1);
         document.getElementById('calc1AltitudeValue').textContent = altitude.toFixed(1);
         document.getElementById('calc1FOVWidth').value = fovWidth.toFixed(1);
@@ -2012,12 +1337,10 @@ function toggleBuilding(buildingType) {
         document.getElementById('calc1VerticalAOV').textContent = verticalAOV.toFixed(1);
         document.getElementById('calc1DiagonalAOV').textContent = diagonalAOVCalc.toFixed(1);
     
-        // Update Main Controls
         document.getElementById('aov').value = horizontalAOV.toFixed(1);
         document.getElementById('altitudeValue').textContent = altitude.toFixed(1);
         document.getElementById('widthValue').textContent = fovWidth.toFixed(1);
     
-        // Update Drone Position and FOV Area
         drone.position.y = altitude;
     
         fovArea.scale.set(fovWidth, fovWidth / aspectRatio, 1);
@@ -2058,10 +1381,7 @@ function toggleBuilding(buildingType) {
     
         verticalLine.clear();
         const centerPoint = new THREE.Vector3(drone.position.x, 0, drone.position.z);
-        const verticalLineGeometry = createDottedLine([
-            drone.position.clone(),
-            centerPoint
-        ], 0xFFFFFF);
+        const verticalLineGeometry = createDottedLine([drone.position.clone(), centerPoint], 0xFFFFFF);
         verticalLine.add(verticalLineGeometry);
     
         fovLines.clear();
@@ -2089,7 +1409,6 @@ function toggleBuilding(buildingType) {
             diagonals.add(diagonalBD);
         }
     
-        // Remove existing corner labels
         cornerLabels.forEach(label => scene.remove(label));
         cornerLabels = [];
     
@@ -2100,7 +1419,6 @@ function toggleBuilding(buildingType) {
             cornerLabels.push(label);
         });
     
-        // Remove existing dimension labels
         dimensionLabels.forEach(label => scene.remove(label));
         dimensionLabels = [];
     
@@ -2137,18 +1455,12 @@ function toggleBuilding(buildingType) {
                 scaleFactor = minScale + ((altitude - baseAltitude) / (500 - baseAltitude)) * (maxScale - minScale);
             }
     
-            const abLength = Math.sqrt(
-                Math.pow(corners[1].x - corners[0].x, 2) +
-                Math.pow(corners[1].z - corners[0].z, 2)
-            );
+            const abLength = Math.sqrt(Math.pow(corners[1].x - corners[0].x, 2) + Math.pow(corners[1].z - corners[0].z, 2));
             const abLabel = createDimensionLabel(`${getTranslation('AB:', 'AB：')} ${abLength.toFixed(1)}m`, offsetMidpointAB, scaleFactor);
             scene.add(abLabel);
             dimensionLabels.push(abLabel);
     
-            const bcLength = Math.sqrt(
-                Math.pow(corners[2].x - corners[1].x, 2) +
-                Math.pow(corners[2].z - corners[1].z, 2)
-            );
+            const bcLength = Math.sqrt(Math.pow(corners[2].x - corners[1].x, 2) + Math.pow(corners[2].z - corners[1].z, 2));
             const bcLabel = createDimensionLabel(`${getTranslation('BC:', 'BC：')} ${bcLength.toFixed(1)}m`, offsetMidpointBC, scaleFactor);
             scene.add(bcLabel);
             dimensionLabels.push(bcLabel);
@@ -2158,15 +1470,10 @@ function toggleBuilding(buildingType) {
             scene.remove(centerLabel);
         }
     
-        const centerPosition = new THREE.Vector3(
-            drone.position.x,
-            0,
-            drone.position.z
-        );
+        const centerPosition = new THREE.Vector3(drone.position.x, 0, drone.position.z);
         centerLabel = createCenterLabel('O', centerPosition);
         scene.add(centerLabel);
     
-        // Update display values
         document.getElementById('aovValue').textContent = aov.toFixed(1);
         document.getElementById('vaovValue').textContent = altitude > 0 ? verticalAOV.toFixed(1) : '0.0';
         document.getElementById('daovValue').textContent = altitude > 0 ? diagonalAOV.toFixed(1) : '0.0';
@@ -2207,6 +1514,8 @@ function toggleBuilding(buildingType) {
         }
     }, { passive: false });
     
+    const isiPad = /iPad/i.test(navigator.userAgent);
+    
     function getTouchPos(touchEvent) {
         const rect = renderer.domElement.getBoundingClientRect();
         return {
@@ -2215,105 +1524,85 @@ function toggleBuilding(buildingType) {
         };
     }
     
-// Variables to Track Touch States
-let lastTouchX = null;
-let lastTouchY = null;
-let isPinching = false;
-let initialPinchDistance = 0;
-
-// Utility Function to Calculate Distance Between Two Touch Points
-function getDistance(touch1, touch2) {
-    const dx = touch2.clientX - touch1.clientX;
-    const dy = touch2.clientY - touch1.clientY;
-    return Math.sqrt(dx * dx + dy * dy);
-}
-
-// Enhanced Touch Start Handler
-renderer.domElement.addEventListener('touchstart', function(event) {
-    event.preventDefault();
-
-    if (event.touches.length === 1) {
-        // Single-Finger Touch: Initialize Drag for Rotation or Altitude
-        lastTouchX = event.touches[0].clientX;
-        lastTouchY = event.touches[0].clientY;
-    } else if (event.touches.length === 2) {
-        // Two-Finger Touch: Initialize Pinch for Zoom
-        isPinching = true;
-        initialPinchDistance = getDistance(event.touches[0], event.touches[1]);
+    let lastTouchX = null;
+    let lastTouchY = null;
+    let isPinching = false;
+    let initialPinchDistance = 0;
+    
+    function getDistance(touch1, touch2) {
+        const dx = touch2.clientX - touch1.clientX;
+        const dy = touch2.clientY - touch1.clientY;
+        return Math.sqrt(dx * dx + dy * dy);
     }
-}, { passive: false });
-
-// Enhanced Touch Move Handler
-renderer.domElement.addEventListener('touchmove', function(event) {
-    event.preventDefault();
-
-    if (event.touches.length === 1 && !isPinching) {
-        // Single-Finger Drag for Rotation and Altitude
-
-        const touch = event.touches[0];
-        const deltaX = touch.clientX - lastTouchX;
-        const deltaY = touch.clientY - lastTouchY;
-        lastTouchX = touch.clientX;
-        lastTouchY = touch.clientY;
-
-        const threshold = 5; // Minimum movement to consider to prevent jitter
-
-        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > threshold) {
-            // Horizontal Drag: Rotate Camera
-            const rotationSpeed = 0.005; // Adjust for sensitivity
-            cameraAngle += deltaX * rotationSpeed;
-            updateCamera();
-        } else if (Math.abs(deltaY) > threshold) {
-            // Vertical Drag: Change Drone Altitude
-            const altitudeChange = -deltaY * 0.5; // Negative to make upward drag increase altitude
-            drone.position.y += altitudeChange;
-            drone.position.y = Math.max(0, Math.min(500, drone.position.y)); // Clamp between 0 and 500 meters
-            updateFOV();
+    
+    renderer.domElement.addEventListener('touchstart', function(event) {
+        event.preventDefault();
+    
+        if (event.touches.length === 1) {
+            lastTouchX = event.touches[0].clientX;
+            lastTouchY = event.touches[0].clientY;
+        } else if (event.touches.length === 2) {
+            isPinching = true;
+            initialPinchDistance = getDistance(event.touches[0], event.touches[1]);
+        }
+    }, { passive: false });
+    
+    renderer.domElement.addEventListener('touchmove', function(event) {
+        event.preventDefault();
+    
+        if (event.touches.length === 1 && !isPinching) {
+            const touch = event.touches[0];
+            const deltaX = touch.clientX - lastTouchX;
+            const deltaY = touch.clientY - lastTouchY;
+            lastTouchX = touch.clientX;
+            lastTouchY = touch.clientY;
+    
+            const threshold = 5;
+    
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > threshold) {
+                const rotationSpeed = 0.005;
+                cameraAngle += deltaX * rotationSpeed;
+                updateCamera();
+            } else if (!isiPad && Math.abs(deltaY) > threshold) {
+                const altitudeChange = -deltaY * 0.5;
+                drone.position.y += altitudeChange;
+                drone.position.y = Math.max(0, Math.min(500, drone.position.y));
+                updateFOV();
+                updateCamera();
+            }
+    
+        } else if (event.touches.length === 2) {
+            const currentDistance = getDistance(event.touches[0], event.touches[1]);
+            const deltaDistance = currentDistance - initialPinchDistance;
+            initialPinchDistance = currentDistance;
+    
+            const zoomSpeed = 0.1;
+            cameraDistance -= deltaDistance * zoomSpeed;
+            cameraDistance = Math.max(10, Math.min(1000, cameraDistance));
             updateCamera();
         }
-
-    } else if (event.touches.length === 2) {
-        // Two-Finger Pinch for Zoom
-
-        const currentDistance = getDistance(event.touches[0], event.touches[1]);
-        const deltaDistance = currentDistance - initialPinchDistance;
-        initialPinchDistance = currentDistance;
-
-        const zoomSpeed = 0.1; // Adjust for sensitivity
-        cameraDistance -= deltaDistance * zoomSpeed;
-        cameraDistance = Math.max(10, Math.min(1000, cameraDistance)); // Clamp between 10 and 1000
-        updateCamera();
-    }
-}, { passive: false });
-
-// Enhanced Touch End Handler
-renderer.domElement.addEventListener('touchend', function(event) {
-    event.preventDefault();
-
-    if (event.touches.length < 2) {
-        // Ending Pinch Gesture
-        isPinching = false;
-        initialPinchDistance = 0;
-    }
-
-    if (event.touches.length === 0) {
-        // Reset Last Touch Positions
-        lastTouchX = null;
-        lastTouchY = null;
-    }
-}, { passive: false });
-
-
-
+    }, { passive: false });
+    
+    renderer.domElement.addEventListener('touchend', function(event) {
+        event.preventDefault();
+    
+        if (event.touches.length < 2) {
+            isPinching = false;
+            initialPinchDistance = 0;
+        }
+    
+        if (event.touches.length === 0) {
+            lastTouchX = null;
+            lastTouchY = null;
+        }
+    }, { passive: false });
+    
     document.querySelectorAll('button').forEach(button => {
         button.addEventListener('touchstart', function(e) {
             e.preventDefault();
             this.click();
         });
     });
-    
-    // View Control Touch Handling (Optional for better UX)
-    // Removed to prevent interference with language toggle
     
     let lastTouchEnd = 0;
     document.addEventListener('touchend', function(event) {
@@ -2324,7 +1613,6 @@ renderer.domElement.addEventListener('touchend', function(event) {
         lastTouchEnd = now;
     }, false);
     
-    // View Control Functions
     function tiltUp() {
         cameraTilt = Math.min(cameraTilt + 0.1, Math.PI / 2 - 0.1);
         updateCamera();
@@ -2356,22 +1644,16 @@ renderer.domElement.addEventListener('touchend', function(event) {
     }
     
     function resetView() {
-        // Reset camera parameters
         cameraAngle = Math.PI / 2;
         cameraTilt = 0.5;
         cameraDistance = 100;
     
-        // Reset drone position
         drone.position.set(0, 0, 0);
     
-        // Update FOV and camera
         updateFOV();
         updateCamera();
     
-        // Reset AOV slider to default value (70 degrees)
         document.getElementById('aov').value = 70;
-        
-        // Trigger the input event to update the display
         document.getElementById('aov').dispatchEvent(new Event('input'));
     }
     
@@ -2401,7 +1683,6 @@ renderer.domElement.addEventListener('touchend', function(event) {
         updateCamera();
     }
     
-    // Attach Event Listeners to View Control Buttons
     document.getElementById('tiltUp').addEventListener('click', tiltUp);
     document.getElementById('tiltDown').addEventListener('click', tiltDown);
     document.getElementById('rotateLeft').addEventListener('click', rotateLeft);
@@ -2414,37 +1695,32 @@ renderer.domElement.addEventListener('touchend', function(event) {
     document.getElementById('moveForward').addEventListener('click', moveForward);
     document.getElementById('moveBackward').addEventListener('click', moveBackward);
     
-    // Language switching
     const languageToggle = document.getElementById('languageToggle');
     const elements = document.querySelectorAll('[data-i18n], [data-i18n-zh]');
     
-languageToggle.addEventListener('click', () => {
-    if (languageToggle.textContent === '繁體中文') {
-        // Switch to Traditional Chinese
-        languageToggle.textContent = 'English'; // Update button to indicate next toggle
-        elements.forEach(element => {
-            if (element.hasAttribute('data-i18n-zh')) {
-                element.textContent = element.getAttribute('data-i18n-zh');
-            }
-        });
-    } else {
-        // Switch to English
-        languageToggle.textContent = '繁體中文'; // Update button to indicate next toggle
-        elements.forEach(element => {
-            if (element.hasAttribute('data-i18n')) {
-                element.textContent = element.getAttribute('data-i18n');
-            }
-        });
-    }
-    updateTutorialTranslation(); // Ensure tutorial content updates if active
-});
+    languageToggle.addEventListener('click', () => {
+        if (languageToggle.textContent === '繁體中文') {
+            languageToggle.textContent = 'English';
+            elements.forEach(element => {
+                if (element.hasAttribute('data-i18n-zh')) {
+                    element.textContent = element.getAttribute('data-i18n-zh');
+                }
+            });
+        } else {
+            languageToggle.textContent = '繁體中文';
+            elements.forEach(element => {
+                if (element.hasAttribute('data-i18n')) {
+                    element.textContent = element.getAttribute('data-i18n');
+                }
+            });
+        }
+        updateTutorialTranslation();
+    });
     
-    // Function to get translation based on current language
     function getTranslation(en, zh) {
         return languageToggle.textContent === '繁體中文' ? en : zh;
     }
     
-    // Tutorial Functionality
     const startTutorialButton = document.getElementById('startTutorial');
     const tutorialOverlay = document.getElementById('tutorialOverlay');
     const closeTutorialButton = document.querySelector('.closeTutorial');
@@ -2453,7 +1729,6 @@ languageToggle.addEventListener('click', () => {
     const prevStepButton = document.getElementById('prevStep');
     let currentStep = 0;
     
-    // Highlight Box
     const highlightBox = document.getElementById('highlightBox');
     
     startTutorialButton.addEventListener('click', () => {
@@ -2474,7 +1749,6 @@ languageToggle.addEventListener('click', () => {
             showStep(currentStep);
             highlightCurrentStep();
         } else {
-            // Last step: Close the tutorial without additional alert
             tutorialOverlay.style.display = 'none';
             removeHighlight();
         }
@@ -2488,97 +1762,85 @@ languageToggle.addEventListener('click', () => {
         }
     });
     
-function showStep(index) {
-    steps.forEach((step, i) => {
-        step.classList.toggle('active', i === index);
-    });
-
-    // Update navigation buttons visibility
-    prevStepButton.style.display = index === 0 ? 'none' : 'inline-block';
-
-    // Update "Next" button's data attributes based on the step
-    if (index === steps.length - 1) {
-        nextStepButton.setAttribute('data-i18n', 'Finish');
-        nextStepButton.setAttribute('data-i18n-zh', '完成');
-    } else {
-        nextStepButton.setAttribute('data-i18n', 'Next');
-        nextStepButton.setAttribute('data-i18n-zh', '下一頁');
-    }
-
-    // Apply the current language to update the button's text
-    if (languageToggle.textContent === '繁體中文') {
-        // Currently in English
-        nextStepButton.textContent = nextStepButton.getAttribute('data-i18n');
-    } else {
-        // Currently in Traditional Chinese
-        nextStepButton.textContent = nextStepButton.getAttribute('data-i18n-zh');
-    }
-}
-
-function updateLanguageText() {
-    elements.forEach(element => {
-        if (languageToggle.textContent === '繁體中文') {
-            // Current language is English
-            if (element.hasAttribute('data-i18n')) {
-                element.textContent = element.getAttribute('data-i18n');
-            }
+    function showStep(index) {
+        steps.forEach((step, i) => {
+            step.classList.toggle('active', i === index);
+        });
+    
+        prevStepButton.style.display = index === 0 ? 'none' : 'inline-block';
+    
+        if (index === steps.length - 1) {
+            nextStepButton.setAttribute('data-i18n', 'Finish');
+            nextStepButton.setAttribute('data-i18n-zh', '完成');
         } else {
-            // Current language is Traditional Chinese
-            if (element.hasAttribute('data-i18n-zh')) {
-                element.textContent = element.getAttribute('data-i18n-zh');
-            }
+            nextStepButton.setAttribute('data-i18n', 'Next');
+            nextStepButton.setAttribute('data-i18n-zh', '下一頁');
         }
-    });
-}
-
     
-function highlightCurrentStep() {
-    const currentStepElement = steps[currentStep];
-    const targetSelector = getTargetSelector(currentStep);
-    
-    if (targetSelector) {
-        const targetElements = document.querySelectorAll(targetSelector);
-        if (targetElements.length > 0) {
-            // Calculate the bounding rectangle that encompasses all target elements
-            let minLeft = Infinity, minTop = Infinity, maxRight = -Infinity, maxBottom = -Infinity;
-    
-            targetElements.forEach(elem => {
-                const rect = elem.getBoundingClientRect();
-                if (rect.left < minLeft) minLeft = rect.left;
-                if (rect.top < minTop) minTop = rect.top;
-                if (rect.right > maxRight) maxRight = rect.right;
-                if (rect.bottom > maxBottom) maxBottom = rect.bottom;
-            });
-    
-            // Add some padding to the highlight box
-            const padding = 10; // pixels
-            const width = maxRight - minLeft + padding * 2;
-            const height = maxBottom - minTop + padding * 2;
-            const left = minLeft - padding;
-            const top = minTop - padding;
-    
-            highlightBox.style.display = 'block';
-            highlightBox.style.width = `${width}px`;
-            highlightBox.style.height = `${height}px`;
-            highlightBox.style.left = `${left}px`;
-            highlightBox.style.top = `${top}px`;
-            tutorialOverlay.classList.add('active');
+        if (languageToggle.textContent === '繁體中文') {
+            nextStepButton.textContent = nextStepButton.getAttribute('data-i18n');
         } else {
-            // If no targeted elements found, hide the highlight
+            nextStepButton.textContent = nextStepButton.getAttribute('data-i18n-zh');
+        }
+    }
+    
+    function updateLanguageText() {
+        elements.forEach(element => {
+            if (languageToggle.textContent === '繁體中文') {
+                if (element.hasAttribute('data-i18n')) {
+                    element.textContent = element.getAttribute('data-i18n');
+                }
+            } else {
+                if (element.hasAttribute('data-i18n-zh')) {
+                    element.textContent = element.getAttribute('data-i18n-zh');
+                }
+            }
+        });
+    }
+    
+    function highlightCurrentStep() {
+        const currentStepElement = steps[currentStep];
+        const targetSelector = getTargetSelector(currentStep);
+    
+        if (targetSelector) {
+            const targetElements = document.querySelectorAll(targetSelector);
+            if (targetElements.length > 0) {
+                let minLeft = Infinity, minTop = Infinity, maxRight = -Infinity, maxBottom = -Infinity;
+    
+                targetElements.forEach(elem => {
+                    const rect = elem.getBoundingClientRect();
+                    if (rect.left < minLeft) minLeft = rect.left;
+                    if (rect.top < minTop) minTop = rect.top;
+                    if (rect.right > maxRight) maxRight = rect.right;
+                    if (rect.bottom > maxBottom) maxBottom = rect.bottom;
+                });
+    
+                const padding = 10;
+                const width = maxRight - minLeft + padding * 2;
+                const height = maxBottom - minTop + padding * 2;
+                const left = minLeft - padding;
+                const top = minTop - padding;
+    
+                highlightBox.style.display = 'block';
+                highlightBox.style.width = `${width}px`;
+                highlightBox.style.height = `${height}px`;
+                highlightBox.style.left = `${left}px`;
+                highlightBox.style.top = `${top}px`;
+                tutorialOverlay.classList.add('active');
+            } else {
+                removeHighlight();
+            }
+        } else {
             removeHighlight();
         }
-    } else {
-        // If there's no target for highlighting, hide the highlight
-        removeHighlight();
     }
-}
-
-window.addEventListener('resize', () => {
-    if (tutorialOverlay.style.display === 'flex') {
-        highlightCurrentStep();
-    }
-});
-   
+    
+    window.addEventListener('resize', () => {
+        if (tutorialOverlay.style.display === 'flex') {
+            highlightCurrentStep();
+        }
+    });
+    
     function removeHighlight() {
         highlightBox.style.display = 'none';
         tutorialOverlay.classList.remove('active');
@@ -2586,37 +1848,24 @@ window.addEventListener('resize', () => {
     
     function getTargetSelector(currentStep) {
         switch(currentStep) {
-            case 0: return null; // Welcome Step
-            case 1: return '#controls .aspectRatioButtons'; // Aspect Ratio Selection
-            case 2: return '#aov'; // Adjusting Horizontal AOV
-            case 3: return '#verticalDiagonalAOV'; // Vertical and Diagonal AOV
-            case 4: return '#altitudeFOVMeasurements'; // Altitude and FOV Measurements
-            case 5: return '.toggle-building'; // Toggling Buildings (All three buttons)
-            case 6: return '#additionalControls'; // Calculation Controls
-            case 7: return '#viewControls'; // View Controls
-            case 8: return '#languageToggle'; // Language Toggle
-            case 9: return null; // Conclusion
+            case 0: return null;
+            case 1: return '#controls .aspectRatioButtons';
+            case 2: return '#aov';
+            case 3: return '#verticalDiagonalAOV';
+            case 4: return '#altitudeFOVMeasurements';
+            case 5: return '.toggle-building';
+            case 6: return '#additionalControls';
+            case 7: return '#viewControls';
+            case 8: return '#languageToggle';
+            case 9: return null;
             default: return null;
         }
     }
     
-function updateTutorialTranslation() {
-    // Update text content based on language
-    updateLanguageText();
-    
-    // Re-highlight in case of language change
-    highlightCurrentStep();
-}
-    
-    // Function to highlight elements based on tutorial steps is already handled in highlightCurrentStep()
-    
-    </script>
-    
-    <!-- Three.js Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script>
-    
-    // The rest of your Three.js setup and functions remain unchanged
+    function updateTutorialTranslation() {
+        updateLanguageText();
+        highlightCurrentStep();
+    }
     
     </script>
     
