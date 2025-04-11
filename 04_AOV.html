@@ -1327,17 +1327,18 @@
      *****************/
     
     function syncAltitude(newAltitude) {
+      // Set drone altitude and synchronize in all panels.
       drone.position.y = newAltitude;
-      // Update left panel altitude slider and display
+      // Update left panel altitude slider and display.
       const altSlider = document.getElementById('droneAltitudeSlider');
       if(altSlider) {
         altSlider.value = newAltitude;
         document.getElementById('droneAltitudeValue').textContent = newAltitude.toFixed(1);
       }
-      // Update altitude slider in panel 2
+      // Update altitude slider in panel 2.
       document.getElementById('calc1Altitude').value = newAltitude;
       document.getElementById('calc1AltitudeValue').textContent = newAltitude.toFixed(1);
-      // Also update the Altitude display in left panel's measurement section
+      // Update Altitude display in left panel measurement section.
       document.getElementById('altitudeValue').textContent = newAltitude.toFixed(1);
       updateFOV();
       updateCamera();
@@ -1374,7 +1375,7 @@
       }
     });
     
-    // Listen to altitude change from panel 3 (calc1Altitude already handled)
+    // Listen to altitude change from panel 2.
     document.getElementById('calc1Altitude').addEventListener('input', function() {
       syncAltitude(parseFloat(this.value));
     });
@@ -1895,16 +1896,15 @@
       document.getElementById('aov').dispatchEvent(new Event('input'));
     }
     
+    // Revised moveUp and moveDown functions to use syncAltitude so that altitude changes via view controls are synchronized.
     function moveUp() {
-      drone.position.y = Math.min(500, drone.position.y + 1);
-      updateFOV();
-      updateCamera();
+      const newAltitude = Math.min(500, drone.position.y + 1);
+      syncAltitude(newAltitude);
     }
     
     function moveDown() {
-      drone.position.y = Math.max(0, drone.position.y - 1);
-      updateFOV();
-      updateCamera();
+      const newAltitude = Math.max(0, drone.position.y - 1);
+      syncAltitude(newAltitude);
     }
     
     function moveForward() {
