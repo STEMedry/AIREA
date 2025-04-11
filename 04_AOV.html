@@ -54,7 +54,7 @@
     
     /* Controls Panel Styling */
     #controls {
-        font-size: 0.9rem;
+        font-size: 1rem;
         position: fixed;
         top: 10px;
         left: 10px;
@@ -457,7 +457,7 @@
         <!-- Start Tutorial Button -->
         <button id="startTutorial" data-i18n="Start Tutorial" data-i18n-zh="開始教程">Start Tutorial</button>
     
-        <h2 data-i18n="Calculate Area" data-i18n-zh="計算面積">Calculate Area</h2>
+        <h2 data-i18n="1. Calculate Area" data-i18n-zh="1. 計算面積">1. Calculate Area</h2>
     
         <h3 data-i18n="Aspect Ratio" data-i18n-zh="畫幅比例">Aspect Ratio</h3>
         <div class="aspectRatioButtons">
@@ -525,7 +525,7 @@
     
     <!-- Calculation Controls Panel -->
     <div id="additionalControls">
-        <h3 data-i18n="Calculate AOV" data-i18n-zh="計算視角">Calculate AOV</h3>
+        <h3 data-i18n="2. Calculate AOV" data-i18n-zh="2. 計算視角">2. Calculate AOV</h3>
         <div class="aspectRatioButtons">
             <button class="aspectRatioBtn" data-ratio="1.5" data-i18n="3:2" data-i18n-zh="3:2">3:2</button>
             <button class="aspectRatioBtn" data-ratio="1.333" data-i18n="4:3" data-i18n-zh="4:3">4:3</button>
@@ -566,7 +566,7 @@
     
         <hr>
     
-        <h3 data-i18n="Calculate Altitude" data-i18n-zh="計算高度">Calculate Altitude</h3>
+        <h3 data-i18n="3. Calculate Altitude" data-i18n-zh="3. 計算高度">3. Calculate Altitude</h3>
         <div class="aspectRatioButtons">
             <button class="aspectRatioBtn" data-ratio="1.5" data-i18n="3:2" data-i18n-zh="3:2">3:2</button>
             <button class="aspectRatioBtn" data-ratio="1.333" data-i18n="4:3" data-i18n-zh="4:3">4:3</button>
@@ -2215,6 +2215,9 @@ function toggleBuilding(buildingType) {
         };
     }
     
+
+
+
     renderer.domElement.addEventListener('touchstart', function(event) {
         event.preventDefault();
         if (event.touches.length === 1) {
@@ -2232,10 +2235,14 @@ function toggleBuilding(buildingType) {
             onMouseMove({
                 clientX: event.touches[0].clientX,
                 clientY: event.touches[0].clientY,
-                buttons: 1
+                buttons: 2
             });
         }
     }, { passive: false });
+
+
+
+
     
     document.querySelectorAll('button').forEach(button => {
         button.addEventListener('touchstart', function(e) {
