@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Dronography Angle of View (AOV) Simulation</title>
+<title>Drone Camera Angle of View (AOV) Simulation</title>
 <style>
     body {
         margin: 0;
@@ -31,14 +31,14 @@
     
     #title h1 {
         margin: 0;
-        font-size: 20px;
+        font-size: 32px;
     }
     
     /* Style for Language Toggle and Start Tutorial Buttons */
     #languageToggle, #startTutorial {
       margin-bottom: 10px;
       padding: 5px 10px;
-      font-size: 12px;
+      font-size: 14px;
       cursor: pointer;
       background: #4CAF50;
       border: none;
@@ -54,7 +54,7 @@
     
     /* Controls Panel Styling */
     #controls {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
         position: fixed;
         top: 10px;
         left: 10px;
@@ -101,7 +101,7 @@
     }
     
     #additionalControls h3 {
-        font-size: 16px;
+        font-size: 24px;
         margin: 0px 0 5px;
     }
     
@@ -111,9 +111,9 @@
     }
     
     #additionalControls input[type="range"] {
-        width: 100%;
-        height: 5px;
-        padding: 5px;
+        width: 90%;
+        height: 10px; /* Increased height by 1.5x from 15px */
+        padding: 7.5px; /* Increased padding proportionally */
         margin: 2px 0 8px;
         font-size: 12px;
     }
@@ -153,6 +153,7 @@
         #additionalControls button {
             font-size: 12px;
             padding: 5px;
+            height: 22.5px; /* Maintain increased height on smaller screens */
         }
     }
     
@@ -189,7 +190,7 @@
     input[type="range"] {
         -webkit-appearance: none;
         width: 100%;
-        height: 15px;
+        height: 22.5px; /* Increased height by 1.5x from 15px */
         background: #d3d3d3;
         outline: none;
         opacity: 0.7;
@@ -201,16 +202,16 @@
     input[type="range"]::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
-        width: 15px;
-        height: 15px;
+        width: 22.5px; /* Increased size by 1.5x from 15px */
+        height: 22.5px; /* Increased size by 1.5x from 15px */
         background: #4CAF50;
         cursor: pointer;
         border-radius: 50%;
     }
     
     input[type="range"]::-moz-range-thumb {
-        width: 35px;
-        height: 35px;
+        width: 52.5px; /* Increased size by 1.5x from 35px */
+        height: 52.5px; /* Increased size by 1.5x from 35px */
         background: #4CAF50;
         cursor: pointer;
         border-radius: 50%;
@@ -255,7 +256,7 @@
         flex: 1;
         margin: 0 5px;
         padding: 5px;
-        font-size: 12px;
+        font-size: 13px; /* Increased font size by 1.1x from 12px */
         background-color: #4CAF50; /* Default green color */
         color: white;
         border: none;
@@ -378,6 +379,7 @@
     box-sizing: border-box;
     display: none;
     transition: all 0.3s ease;
+    background: transparent;
 }
     
     #tutorialOverlay.active {
@@ -455,7 +457,7 @@
         <!-- Start Tutorial Button -->
         <button id="startTutorial" data-i18n="Start Tutorial" data-i18n-zh="開始教程">Start Tutorial</button>
     
-        <h2 data-i18n="Main Controls" data-i18n-zh="主要控制">Main Controls</h2>
+        <h2 data-i18n="Calculate Area" data-i18n-zh="計算面積">Calculate Area</h2>
     
         <h3 data-i18n="Aspect Ratio" data-i18n-zh="畫幅比例">Aspect Ratio</h3>
         <div class="aspectRatioButtons">
@@ -2371,7 +2373,7 @@ languageToggle.addEventListener('click', () => {
     
     // Function to get translation based on current language
     function getTranslation(en, zh) {
-        return languageToggle.textContent === '繁體中文' ? zh : en;
+        return languageToggle.textContent === '繁體中文' ? en : zh;
     }
     
     // Tutorial Functionality
@@ -2461,8 +2463,7 @@ function updateLanguageText() {
     });
 }
 
-
-
+    
 function highlightCurrentStep() {
     const currentStepElement = steps[currentStep];
     const targetSelector = getTargetSelector(currentStep);
@@ -2503,7 +2504,7 @@ function highlightCurrentStep() {
         removeHighlight();
     }
 }
- 
+
 window.addEventListener('resize', () => {
     if (tutorialOverlay.style.display === 'flex') {
         highlightCurrentStep();
