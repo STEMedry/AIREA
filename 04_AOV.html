@@ -2215,35 +2215,96 @@ function toggleBuilding(buildingType) {
         };
     }
     
+// Variables to Track Touch States
+let lastTouchX = null;
+let lastTouchY = null;
+let isPinching = false;
+let initialPinchDistance = 0;
 
+// Utility Function to Calculate Distance Between Two Touch Points
+function getDistance(touch1, touch2) {
+    const dx = touch2.clientX - touch1.clientX;
+    const dy = touch2.clientY - touch1.clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+}
 
+// Enhanced Touch Start Handler
+renderer.domElement.addEventListener('touchstart', function(event) {
+    event.preventDefault();
 
-    renderer.domElement.addEventListener('touchstart', function(event) {
-        event.preventDefault();
-        if (event.touches.length === 1) {
-            onMouseDown({
-                clientX: event.touches[0].clientX,
-                clientY: event.touches[0].clientY,
-                button: 0
-            });
+    if (event.touches.length === 1) {
+        // Single-Finger Touch: Initialize Drag for Rotation or Altitude
+        lastTouchX = event.touches[0].clientX;
+        lastTouchY = event.touches[0].clientY;
+    } else if (event.touches.length === 2) {
+        // Two-Finger Touch: Initialize Pinch for Zoom
+        isPinching = true;
+        initialPinchDistance = getDistance(event.touches[0], event.touches[1]);
+    }
+}, { passive: false });
+
+// Enhanced Touch Move Handler
+renderer.domElement.addEventListener('touchmove', function(event) {
+    event.preventDefault();
+
+    if (event.touches.length === 1 && !isPinching) {
+        // Single-Finger Drag for Rotation and Altitude
+
+        const touch = event.touches[0];
+        const deltaX = touch.clientX - lastTouchX;
+        const deltaY = touch.clientY - lastTouchY;
+        lastTouchX = touch.clientX;
+        lastTouchY = touch.clientY;
+
+        const threshold = 5; // Minimum movement to consider to prevent jitter
+
+        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > threshold) {
+            // Horizontal Drag: Rotate Camera
+            const rotationSpeed = 0.005; // Adjust for sensitivity
+            cameraAngle += deltaX * rotationSpeed;
+            updateCamera();
+        } else if (Math.abs(deltaY) > threshold) {
+            // Vertical Drag: Change Drone Altitude
+            const altitudeChange = -deltaY * 0.5; // Negative to make upward drag increase altitude
+            drone.position.y += altitudeChange;
+            drone.position.y = Math.max(0, Math.min(500, drone.position.y)); // Clamp between 0 and 500 meters
+            updateFOV();
+            updateCamera();
         }
-    }, { passive: false });
-    
-    renderer.domElement.addEventListener('touchmove', function(event) {
-        event.preventDefault();
-        if (event.touches.length === 1) {
-            onMouseMove({
-                clientX: event.touches[0].clientX,
-                clientY: event.touches[0].clientY,
-                buttons: 2
-            });
-        }
-    }, { passive: false });
+
+    } else if (event.touches.length === 2) {
+        // Two-Finger Pinch for Zoom
+
+        const currentDistance = getDistance(event.touches[0], event.touches[1]);
+        const deltaDistance = currentDistance - initialPinchDistance;
+        initialPinchDistance = currentDistance;
+
+        const zoomSpeed = 0.1; // Adjust for sensitivity
+        cameraDistance -= deltaDistance * zoomSpeed;
+        cameraDistance = Math.max(10, Math.min(1000, cameraDistance)); // Clamp between 10 and 1000
+        updateCamera();
+    }
+}, { passive: false });
+
+// Enhanced Touch End Handler
+renderer.domElement.addEventListener('touchend', function(event) {
+    event.preventDefault();
+
+    if (event.touches.length < 2) {
+        // Ending Pinch Gesture
+        isPinching = false;
+        initialPinchDistance = 0;
+    }
+
+    if (event.touches.length === 0) {
+        // Reset Last Touch Positions
+        lastTouchX = null;
+        lastTouchY = null;
+    }
+}, { passive: false });
 
 
 
-
-    
     document.querySelectorAll('button').forEach(button => {
         button.addEventListener('touchstart', function(e) {
             e.preventDefault();
