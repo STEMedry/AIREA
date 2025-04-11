@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI-Generated Simulations</title>
+    <title>Drone Simluations</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -58,6 +58,10 @@
 		    transform: scale(1.15);
 		}
 
+        .button-gray {
+            background-color: gray;
+            color: white;
+        }
         .button-red {
             background-color: red;
             color: white;
@@ -107,11 +111,16 @@
     
     <div class="button-container">
         <button class="button-language language-toggle" onclick="toggleLanguage()" id="lang-toggle">繁體中文</button>
+        <button class="button-gray" onclick="showApp('app0')" id="btn-Home">Home</button>
         <button class="button-red" onclick="showApp('app1')" id="btn-GNSS">Satellite Positioning</button>
         <button class="button-green" onclick="showApp('app2')" id="btn-Flight">Virtual Flight</button>
         <button class="button-brown" onclick="showApp('app3')" id="btn-Physics">QuadPhysics</button>
         <button class="button-slateblue" onclick="showApp('app4')" id="btn-AOV">Dronography AOV</button>
         <button class="button-tomato" onclick="showApp('app5')" id="btn-Code">Code Simulation</button>
+    </div>
+
+    <div id="app0" class="app">
+        <iframe src="00_Home.html" width="100%" height="600px" frameborder="0"></iframe>
     </div>
 
     <div id="app1" class="app">
@@ -142,6 +151,7 @@
                 authorName: 'Richard C Y YEUNG, The Education University of Hong Kong',
                 languageButton: '繁體中文',
                 buttons: {
+		    Home: 'Home',
                     GNSS: 'Satellite Positioing',
                     Flight: 'Virtual Flight',
                     Physics: 'QuadPhysics',
@@ -154,6 +164,7 @@
                 authorName: '楊 仲 堯，香 港 教 育 大 學 (EdUHK)',
                 languageButton: 'English',
                 buttons: {
+		    Home: '主頁',
                     GNSS: '衛星導航系統',
                     Flight: '模擬飛行器',
                     Physics: '四軸機物理',
@@ -181,6 +192,7 @@
             document.getElementById('lang-toggle').textContent = lang.languageButton;
 
             // Update button texts
+            document.getElementById('btn-Home').textContent = lang.buttons.Home;
             document.getElementById('btn-GNSS').textContent = lang.buttons.GNSS;
             document.getElementById('btn-Flight').textContent = lang.buttons.Flight;
             document.getElementById('btn-Physics').textContent = lang.buttons.Physics;
@@ -207,7 +219,7 @@
         }
 
         // Initialize the page
-        showApp('app1');
+        showApp('app0');
     </script>
 </body>
 </html>
