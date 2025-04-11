@@ -105,7 +105,7 @@ button {
 #help-button {
     background-color: #6A5ACD;
     color: white;
-    padding: 8px 16px;
+    padding: 8px 14px;
     font-size: 14px;
     border: none;
     border-radius: 3px;
@@ -113,6 +113,19 @@ button {
     position: absolute;
     top: 10px;
     right: 10px;
+}
+/* New Game button style */
+#game-button {
+    background-color: #6A5ACD;
+    color: white;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 90px; /* Positioned near the Tutorial button */
 }
 #code-input {
     width: 95%;
@@ -247,7 +260,7 @@ button {
 <body>
 <button id="language-switch" onclick="toggleLanguage()">繁體中文</button>
 <h2 data-translate="title">Code Performance Simulation</h2>
-<p data-translate="instruction">Use the blocks to create a flight path for the drone, then click 'Run Code' to execute the instructions.</p>
+<p data-translate="instruction">Use the blocks to create a flight path for the drone, then click 'Run / Pause' to execute the instructions.</p>
 <div id="game-container">
     <div style="display: flex; flex-direction: column; align-items: flex-start;">
         <div id="obstacle-course"></div>
@@ -256,7 +269,9 @@ button {
 
     <div id="code-area">
         <button id="help-button" onclick="openTutorial()" data-translate="helpButton">Tutorial</button>
-    
+        <!-- New Game button -->
+        <button id="game-button" onclick="window.location.href='05_Code_Game.html'">Game</button>
+
         <div id="command-buttons">
             <div class="button-row">
                 <button class="green-button" onclick="addCommand('takeOff')" data-translate="takeOff">Take Off</button>
@@ -295,11 +310,11 @@ button {
                 <input type="text" id="var-value" placeholder="value">
             </div>
         </div>
-    
+
         <textarea id="code-input"></textarea>
         <br>
         <div class="button-row">
-            <button id="run-button" onclick="runCode()" data-translate="runCode">Run Code</button>
+            <button id="run-button" onclick="runCode()" data-translate="runPauseCode">Run / Pause</button>
             <button id="reset-button" onclick="resetSimulation()" data-translate="reset">Reset</button>
             <button id="path-preview-button" onclick="previewPath()" data-translate="pathPreview">Path Preview</button>
             <button id="centre-button" onclick="centreView()" data-translate="centre">Centre</button>
@@ -342,6 +357,9 @@ button {
 
 <script>
 let isResetPressed = false;
+let isPaused = false;
+let pausePromiseResolver = null;
+let isExecuting = false;
 let scene, camera, renderer, drone, obstacles = [], axesHelper, gridHelper;
 let goalMarker;
 const codeInput = document.getElementById('code-input');
@@ -367,7 +385,6 @@ const blinkDuration = 500;
 let blinkState = true;
 
 let commandQueue = [];
-let isExecuting = false;
 
 let isThrottling = false;
 let isYawing = false;
@@ -393,7 +410,7 @@ function initGame() {
     obstacleCourse.appendChild(renderer.domElement);
 
     camera = new THREE.PerspectiveCamera(75, 800 / 600, 0.1, 1000); // Adjusted aspect ratio
-    camera.position.set(10, 7, 10);
+    camera.position.set(100, 70, 100);
     camera.lookAt(dronePosition);
 
     controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -414,7 +431,7 @@ function initGame() {
     addWatermarkSTEM();
     addVerticalLines();
 
-    axesHelper = new THREE.AxesHelper(10);
+    axesHelper = new THREE.AxesHelper(100);
     scene.add(axesHelper);
 
     animate();
@@ -423,21 +440,21 @@ function initGame() {
 function createDrone() {
     const droneGroup = new THREE.Group();
 
-    const cubeWidth = 1.5;
-    const cubeHeight = 0.5;
-    const cubeDepth = 1.5;
+    const cubeWidth = 15;
+    const cubeHeight = 5;
+    const cubeDepth = 15;
     const cubeGeometry = new THREE.BoxGeometry(cubeWidth, cubeHeight, cubeDepth);
     const cubeMaterial = new THREE.MeshPhongMaterial({ color: 0x0000ff, transparent: true, opacity: 0.5 });
     const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
     droneGroup.add(cube);
 
-    const circleRadius = 0.225;
-    const circleHeight = cubeHeight / 2 + 0.01;
+    const circleRadius = 2.25;
+    const circleHeight = cubeHeight / 2 + 0.1;
 
     const frontCircleMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, transparent: true, opacity: 1 });
     const rearCircleMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, transparent: true, opacity: 1 });
 
-    const circleGeometry = new THREE.CylinderGeometry(circleRadius, circleRadius, 0.02, 32);
+    const circleGeometry = new THREE.CylinderGeometry(circleRadius, circleRadius, 0.2, 32);
 
     const frontLeft = new THREE.Mesh(circleGeometry, frontCircleMaterial.clone());
     frontLeft.position.set(-cubeWidth / 2, circleHeight, cubeDepth / 2);
@@ -458,7 +475,7 @@ function createDrone() {
     frontCircles = [frontLeft, frontRight];
     rearCircles = [rearLeft, rearRight];
 
-    const triangleGeometry = new THREE.ConeGeometry(1, 2, 3);
+    const triangleGeometry = new THREE.ConeGeometry(10, 20, 3);
     const triangleMaterial = new THREE.MeshPhongMaterial({ color: 0xffff00 });
     const triangle = new THREE.Mesh(triangleGeometry, triangleMaterial);
     triangle.rotation.x = -Math.PI / 2;
@@ -474,8 +491,8 @@ function createDrone() {
 }
 
 function createCoordinatePlane() {
-    const size = 20;
-    const divisions = 20;
+    const size = 200; // Extends from -100 to +100
+    const divisions = 20; // Step of 10 units
     gridHelper = new THREE.GridHelper(size, divisions, 0xcccccc, 0xcccccc);
     scene.add(gridHelper);
 
@@ -483,24 +500,24 @@ function createCoordinatePlane() {
     fontLoader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function(font) {
         const textMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
 
-        for (let i = -10; i <= 10; i += 2) {
+        for (let i = -100; i <= 100; i += 10) { // Step of 10
             if (i !== 0) {
-                createText(font, textMaterial, i.toString(), i, 0, -10);
-                createText(font, textMaterial, i.toString(), -10, 0, i);
+                createText(font, textMaterial, i.toString(), i, 0, -100);
+                createText(font, textMaterial, i.toString(), -100, 0, i);
             }
         }
 
-        createText(font, textMaterial, 'X', 11, 0, 0);
-        createText(font, textMaterial, 'Z', 0, 0, 11);
-        createText(font, textMaterial, 'Y', 0, 11, 0);
+        createText(font, textMaterial, 'X', 101, 0, 0);
+        createText(font, textMaterial, 'Z', 0, 0, 101);
+        createText(font, textMaterial, 'Y', 0, 101, 0);
     });
 }
 
 function createText(font, material, text, x, y, z) {
     const textGeometry = new THREE.TextGeometry(text, {
         font: font,
-        size: 0.5,
-        height: 0.1,
+        size: 5,
+        height: 0.5,
     });
     const textMesh = new THREE.Mesh(textGeometry, material);
     textMesh.position.set(x, y, z);
@@ -508,12 +525,12 @@ function createText(font, material, text, x, y, z) {
 }
 
 function addDirectionIndicators() {
-    addDirectionIndicator(new THREE.Vector3(12, 0, 0), 'Right', 0xff0000);
-    addDirectionIndicator(new THREE.Vector3(-12, 0, 0), 'Left', 0xff0000);
-    addDirectionIndicator(new THREE.Vector3(0, 12, 0), 'Up', 0x00ff00);
-    addDirectionIndicator(new THREE.Vector3(0, -12, 0), 'Down', 0x00ff00);
-    addDirectionIndicator(new THREE.Vector3(0, 0, 12), 'Rear', 0x0000ff);
-    addDirectionIndicator(new THREE.Vector3(0, 0, -12), 'Front', 0x0000ff);
+    addDirectionIndicator(new THREE.Vector3(120, 0, 0), 'Right', 0xff0000);
+    addDirectionIndicator(new THREE.Vector3(-120, 0, 0), 'Left', 0xff0000);
+    addDirectionIndicator(new THREE.Vector3(0, 120, 0), 'Up', 0x00ff00);
+    addDirectionIndicator(new THREE.Vector3(0, -120, 0), 'Down', 0x00ff00);
+    addDirectionIndicator(new THREE.Vector3(0, 0, 120), 'Rear', 0x0000ff);
+    addDirectionIndicator(new THREE.Vector3(0, 0, -120), 'Front', 0x0000ff);
 }
 
 function addDirectionIndicator(position, text, color) {
@@ -531,7 +548,7 @@ function addDirectionIndicator(position, text, color) {
     const spriteMaterial = new THREE.SpriteMaterial({ map: texture });
     const sprite = new THREE.Sprite(spriteMaterial);
     sprite.position.copy(position);
-    sprite.scale.set(2, 2, 2);
+    sprite.scale.set(20, 20, 20);
     scene.add(sprite);
 }
 
@@ -541,12 +558,12 @@ function addWatermark() {
         const textMaterial = new THREE.MeshBasicMaterial({ color: 0xd3d3d3 });
         const watermarkGeometry = new THREE.TextGeometry('EdUHK', {
             font: font,
-            size: 1,
-            height: 0.05,
+            size: 10,
+            height: 0.5,
         });
         const watermarkMesh = new THREE.Mesh(watermarkGeometry, textMaterial);
         watermarkMesh.rotation.x = -Math.PI / 2;
-        watermarkMesh.position.set(5, 0.1, 0);
+        watermarkMesh.position.set(50, 0.1, 0);
         scene.add(watermarkMesh);
     });
 }
@@ -557,25 +574,25 @@ function addWatermarkSTEM() {
         const textMaterial = new THREE.MeshBasicMaterial({ color: 0xd3d3d3 });
         const stemTextGeometry = new THREE.TextGeometry('STEM Education', {
             font: font,
-            size: 0.7,
-            height: 0.05,
+            size: 7,
+            height: 0.5,
         });
         const stemWatermarkMesh = new THREE.Mesh(stemTextGeometry, textMaterial);
         stemWatermarkMesh.rotation.y = Math.PI / 2;
-        stemWatermarkMesh.position.set(0, 0.1, 10);
+        stemWatermarkMesh.position.set(0, 0.1, 100);
         scene.add(stemWatermarkMesh);
     });
 }
 
 function addVerticalLines() {
     const material = new THREE.LineBasicMaterial({ color: 0xcccccc });
-    for (let y = 2; y <= 10; y += 2) {
+    for (let y = 20; y <= 100; y += 20) {
         const points = [];
-        points.push(new THREE.Vector3(-10, y, -10));
-        points.push(new THREE.Vector3(10, y, -10));
-        points.push(new THREE.Vector3(10, y, 10));
-        points.push(new THREE.Vector3(-10, y, 10));
-        points.push(new THREE.Vector3(-10, y, -10));
+        points.push(new THREE.Vector3(-100, y, -100));
+        points.push(new THREE.Vector3(100, y, -100));
+        points.push(new THREE.Vector3(100, y, 100));
+        points.push(new THREE.Vector3(-100, y, 100));
+        points.push(new THREE.Vector3(-100, y, -100));
 
         const geometry = new THREE.BufferGeometry().setFromPoints(points);
         const line = new THREE.Line(geometry, material);
@@ -623,6 +640,8 @@ function addCommand(commandType) {
         return value;
     };
 
+    const isNumeric = (value) => !isNaN(parseFloat(value)) && isFinite(value);
+
     switch (commandType) {
         case 'takeOff':
             command = 'takeOff';
@@ -633,7 +652,7 @@ function addCommand(commandType) {
         case 'throttleUp':
             parameter = getParameterValue('throttle-distance-up');
             if (!parameter) {
-                alert('Please enter a value or variable for Throttle Up.');
+                alert(translations[currentLanguage].throttleUpAlert);
                 return;
             }
             command = `throttleUp ${parameter}`;
@@ -641,7 +660,7 @@ function addCommand(commandType) {
         case 'throttleDown':
             parameter = getParameterValue('throttle-distance-down');
             if (!parameter) {
-                alert('Please enter a value or variable for Throttle Down.');
+                alert(translations[currentLanguage].throttleDownAlert);
                 return;
             }
             command = `throttleDown ${parameter}`;
@@ -649,7 +668,7 @@ function addCommand(commandType) {
         case 'yawLeft':
             parameter = getParameterValue('yaw-angle');
             if (!parameter) {
-                alert('Please enter a value or variable for Yaw Left.');
+                alert(translations[currentLanguage].yawLeftAlert);
                 return;
             }
             command = `yawLeft ${parameter}`;
@@ -657,7 +676,7 @@ function addCommand(commandType) {
         case 'yawRight':
             parameter = getParameterValue('yaw-angle-right');
             if (!parameter) {
-                alert('Please enter a value or variable for Yaw Right.');
+                alert(translations[currentLanguage].yawRightAlert);
                 return;
             }
             command = `yawRight ${parameter}`;
@@ -665,7 +684,11 @@ function addCommand(commandType) {
         case 'pitchForward':
             parameter = getParameterValue('pitch-distance');
             if (!parameter) {
-                alert('Please enter a value or variable for Pitch Forward.');
+                alert(translations[currentLanguage].pitchForwardAlert);
+                return;
+            }
+            if(isNumeric(parameter) && parseFloat(parameter) < 10){
+                alert(translations[currentLanguage].pitchForwardMinAlert);
                 return;
             }
             command = `pitchForward ${parameter}`;
@@ -673,7 +696,11 @@ function addCommand(commandType) {
         case 'pitchBackward':
             parameter = getParameterValue('pitch-distance-back');
             if (!parameter) {
-                alert('Please enter a value or variable for Pitch Backward.');
+                alert(translations[currentLanguage].pitchBackwardAlert);
+                return;
+            }
+            if(isNumeric(parameter) && parseFloat(parameter) < 10){
+                alert(translations[currentLanguage].pitchBackwardMinAlert);
                 return;
             }
             command = `pitchBackward ${parameter}`;
@@ -681,7 +708,11 @@ function addCommand(commandType) {
         case 'rollLeft':
             parameter = getParameterValue('roll-distance');
             if (!parameter) {
-                alert('Please enter a value or variable for Roll Left.');
+                alert(translations[currentLanguage].rollLeftAlert);
+                return;
+            }
+            if(isNumeric(parameter) && parseFloat(parameter) < 10){
+                alert(translations[currentLanguage].rollLeftMinAlert);
                 return;
             }
             command = `rollLeft ${parameter}`;
@@ -689,7 +720,11 @@ function addCommand(commandType) {
         case 'rollRight':
             parameter = getParameterValue('roll-distance-right');
             if (!parameter) {
-                alert('Please enter a value or variable for Roll Right.');
+                alert(translations[currentLanguage].rollRightAlert);
+                return;
+            }
+            if(isNumeric(parameter) && parseFloat(parameter) < 10){
+                alert(translations[currentLanguage].rollRightMinAlert);
                 return;
             }
             command = `rollRight ${parameter}`;
@@ -697,7 +732,7 @@ function addCommand(commandType) {
         case 'repeat':
             parameter = getParameterValue('repeat-times');
             if (!parameter) {
-                alert('Please enter the number of times or a variable name to repeat.');
+                alert(translations[currentLanguage].repeatAlert);
                 return;
             }
             command = `repeat ${parameter} times\n{\n\n}`;
@@ -706,7 +741,7 @@ function addCommand(commandType) {
             const varName = getParameterValue('var-name');
             const varValue = getParameterValue('var-value');
             if (!varName || !varValue) {
-                alert('Please enter both variable name and value.');
+                alert(translations[currentLanguage].setVariableAlert);
                 return;
             }
             command = `set ${varName} to ${varValue}`;
@@ -807,38 +842,18 @@ function evaluateExpression(expr, variables) {
     }
 }
 
-function executeCommands(commands) {
-    const variables = {};
-    const finalCommands = [];
-
-    function executeCommand(cmd) {
-        if (cmd.type === 'set') {
-            variables[cmd.varName] = evaluateExpression(cmd.expression, variables);
-        } else if (cmd.type === 'repeat') {
-            const count = Math.round(evaluateExpression(cmd.countExpression, variables));
-            for (let i = 0; i < count; i++) {
-                cmd.commands.forEach(subCmd => executeCommand(subCmd));
-            }
-        } else if (cmd.type === 'command') {
-            const parts = cmd.value.split(' ');
-            const evaluatedParts = parts.map((part, index) => {
-                return index === 0 ? part : evaluateExpression(part, variables);
-            });
-            finalCommands.push(evaluatedParts.join(' '));
-        }
-    }
-
-    commands.forEach(executeCommand);
-    return finalCommands;
-}
-
 async function runCode() {
-    if (isResetPressed) {
-        isResetPressed = false;
+    // Removed the reset check so that the Run / Pause button works immediately after reset.
+    if(isExecuting){
+        // Toggle pause
+        isPaused = !isPaused;
+        if(!isPaused && pausePromiseResolver){
+            pausePromiseResolver();
+            pausePromiseResolver = null;
+        }
+        updateRunButton();
         return;
     }
-
-    if (isExecuting) return;
 
     const parsedCommands = parseCode(codeInput.value);
     const commands = executeCommands(parsedCommands);
@@ -850,7 +865,8 @@ async function runCode() {
     }
 
     isExecuting = true;
-    document.getElementById('run-button').disabled = true;
+    isPaused = false;
+    updateRunButton();
 
     commandTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
     commandTimeouts = [];
@@ -863,12 +879,52 @@ async function runCode() {
             break;
         }
         await executeSingleCommand(command);
+        if(isPaused){
+            await new Promise(resolve => {
+                pausePromiseResolver = resolve;
+            });
+        }
     }
 
     isExecuting = false;
-    document.getElementById('run-button').disabled = false;
+    updateRunButton();
 }
 
+function executeCommands(commands) {
+    const variables = {};
+    const finalCommands = [];
+
+    function executeCommand(cmd) {
+        if (cmd.type === 'set') {
+            variables[cmd.varName] = evaluateExpression(cmd.expression, variables);
+        } else if (cmd.type === 'repeat') {
+            let count = evaluateExpression(cmd.countExpression, variables);
+            if (isNaN(count) || count <= 0) {
+                count = 1; // Default to 1 if invalid
+            }
+            count = Math.round(count);
+            for (let i = 0; i < count; i++) {
+                cmd.commands.forEach(subCmd => executeCommand(subCmd));
+            }
+        } else if (cmd.type === 'command') {
+            const parts = cmd.value.split(' ');
+            if (parts[0].startsWith('//')) {
+                // This is a comment, ignore
+                return;
+            }
+            const evaluatedParts = parts.map((part, index) => {
+                if(index === 0){
+                    return part;
+                }
+                return evaluateExpression(part, variables);
+            });
+            finalCommands.push(evaluatedParts.join(' '));
+        }
+    }
+
+    commands.forEach(executeCommand);
+    return finalCommands;
+}
 
 async function executeSingleCommand(command) {
     return new Promise((resolve) => {
@@ -883,7 +939,7 @@ async function executeSingleCommand(command) {
 
         switch (baseCommand.toLowerCase()) {
             case 'takeoff':
-                throttleDrone('up', 2).then(() => {
+                throttleDrone('up', 20).then(() => {
                     console.log(translations[currentLanguage].takingOff);
                     resolve();
                 });
@@ -934,11 +990,13 @@ async function executeSingleCommand(command) {
                     resolve();
                 }
                 break;
-            case 'add':
-            case 'subtract':
-            case 'multiply':
-            case 'divide':
-                console.log(`Arithmetic operation: ${command}`);
+            case 'set':
+                // Handle variable setting within executeSingleCommand if needed
+                console.log(`Setting variable: ${command}`);
+                resolve();
+                break;
+            case 'repeat':
+                // Handled in executeCommands
                 resolve();
                 break;
             default:
@@ -1047,13 +1105,13 @@ function moveDrone(x, y, z, callback) {
 
 function resetSimulation() {
     isResetPressed = true;
+    isPaused = false;
 
     // Immediately stop code execution
     if (isExecuting) {
         commandTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
         commandTimeouts = [];
         isExecuting = false;
-        document.getElementById('run-button').disabled = false;
     }
 
     // Clear all intervals
@@ -1061,13 +1119,14 @@ function resetSimulation() {
     blinkIntervals = {};
 
     // Reset drone to initial position immediately
-    dronePosition = new THREE.Vector3(0, 0, 0);
+    dronePosition = DEFAULT_DRONE_STATE.position.clone();
     drone.position.copy(dronePosition);
-    drone.rotation.set(0, 0, 0, 'XYZ');
+    drone.rotation.copy(DEFAULT_DRONE_STATE.rotation);
+    drone.scale.copy(DEFAULT_DRONE_STATE.scale);
     drone.updateMatrix();
 
     // Reset camera and controls immediately
-    camera.position.set(10, 7, 10);
+    camera.position.set(100, 70, 100);
     camera.lookAt(dronePosition);
     controls.target.copy(dronePosition);
     controls.update();
@@ -1087,7 +1146,7 @@ function resetSimulation() {
     if (gridHelper) {
         scene.remove(gridHelper);
     }
-    gridHelper = new THREE.GridHelper(20, 20, 0xcccccc, 0xcccccc);
+    gridHelper = new THREE.GridHelper(200, 20, 0xcccccc, 0xcccccc);
     scene.add(gridHelper);
 
     // Reset all variables and states
@@ -1096,48 +1155,17 @@ function resetSimulation() {
     isYawing = false;
     pathPositions = [];
 
+    // Reset Run / Pause button to initial state
+    isExecuting = false;
+    isPaused = false;
+    pausePromiseResolver = null;
+    updateRunButton();
+
     // Force an immediate re-render of the scene
     renderer.render(scene, camera);
 
     console.log(translations[currentLanguage].simulationReset);
 }	
-
-function homePosition() {
-    commandTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
-    commandTimeouts = [];
-
-    Object.values(blinkIntervals).forEach(intervalId => clearInterval(intervalId));
-    blinkIntervals = {};
-
-    if (pathLine) {
-        scene.remove(pathLine);
-        pathLine = null;
-        isPathPreviewShown = false;
-    }
-
-    commandQueue = [];
-    isExecuting = false;
-
-    document.getElementById('run-button').disabled = false;
-
-    dronePosition.set(0, 0, 0);
-    drone.rotation.set(0, 0, 0, 'XYZ');
-    drone.position.copy(dronePosition);
-    drone.quaternion.setFromEuler(drone.rotation);
-    camera.position.set(10, 7, 10);
-    camera.lookAt(drone.position);
-    controls.target.copy(dronePosition);
-    controls.update();
-    messageDiv.textContent = '';
-    messageDiv.classList.remove('blink', 'color-change');
-
-    // Reset Grid
-    if (gridHelper) {
-        scene.remove(gridHelper);
-    }
-    gridHelper = new THREE.GridHelper(20, 20, 0xcccccc, 0xcccccc);
-    scene.add(gridHelper);
-}
 
 function rotateView(direction) {
     const rotationAngle = direction === 'left' ? Math.PI / 18 : -Math.PI / 18;
@@ -1148,13 +1176,13 @@ function rotateView(direction) {
 }
 
 function moveViewUp() {
-    camera.position.y += 1;
+    camera.position.y += 10;
     camera.lookAt(dronePosition);
 }
 
 function moveViewDown() {
-    if (camera.position.y > 1) {
-        camera.position.y -= 1;
+    if (camera.position.y > 10) {
+        camera.position.y -= 10;
         camera.lookAt(dronePosition);
     }
 }
@@ -1168,7 +1196,7 @@ function zoom(direction) {
 }
 
 function centreView() {
-    camera.position.set(10, 7, 10);
+    camera.position.set(100, 70, 100);
     camera.lookAt(dronePosition);
     controls.target.copy(dronePosition);
     controls.update();
@@ -1187,11 +1215,11 @@ function previewPath() {
     const parsedCommands = parseCode(codeInput.value);
     const commands = executeCommands(parsedCommands);
 
-    let simulatedPosition = new THREE.Vector3(0, 2, 0); // Start at 2 units high
+    let simulatedPosition = new THREE.Vector3(0, 20, 0); // Start at 20 units high
     let simulatedRotation = new THREE.Euler(0, 0, 0, 'YXZ'); // Use YXZ order for proper yaw rotation
     const positions = [new THREE.Vector3(0, 0, 0), simulatedPosition.clone()]; // Start from ground
 
-    let minX = 0, maxX = 0, minY = 0, maxY = 2, minZ = 0, maxZ = 0;
+    let minX = 0, maxX = 0, minY = 0, maxY = 20, minZ = 0, maxZ = 0;
 
     commands.forEach(command => {
         const parts = command.split(' ');
@@ -1269,10 +1297,10 @@ function previewPath() {
     isPathPreviewShown = true;
 
     // Calculate bounding box with padding
-    const padding = 5;
+    const padding = 50;
     const sizeX = maxX - minX;
     const sizeZ = maxZ - minZ;
-    const maxSize = Math.max(sizeX, sizeZ, 10); // Ensure minimum size
+    const maxSize = Math.max(sizeX, sizeZ, 100); // Ensure minimum size
     const gridSize = Math.ceil((maxSize + padding) * 1.2); // 20% larger than the path with padding
 
     // Remove existing grid
@@ -1281,7 +1309,7 @@ function previewPath() {
     }
 
     // Add new grid
-    gridHelper = new THREE.GridHelper(gridSize, gridSize, 0xcccccc, 0xcccccc);
+    gridHelper = new THREE.GridHelper(gridSize, gridSize / 10, 0xcccccc, 0xcccccc);
     scene.add(gridHelper);
 
     // Recalculate center
@@ -1303,7 +1331,7 @@ function previewPath() {
 const translations = {
     en: {
         title: "Code Performance Simulation",
-        instruction: "Use the blocks to create a flight path for the drone, then click 'Run Code' to execute the instructions.",
+        instruction: "Use the blocks to create a flight path for the drone, then click 'Run / Pause' to execute the instructions.",
         takeOff: "Take Off",
         land: "Land",
         throttleUp: "Throttle Up",
@@ -1316,7 +1344,9 @@ const translations = {
         rollRight: "Roll Right",
         repeat: "Repeat",
         setVariable: "Set",
-        runCode: "Run Code",
+        runPauseCode: "Run / Pause",
+        runPauseCodeRunning: "Pause",
+        runPauseCodePaused: "Resume",
         reset: "Reset",
         pathPreview: "Path Preview",
         centre: "Centre",
@@ -1335,13 +1365,13 @@ const translations = {
         tutorialStep3Title: "Creating a Flight Path",
         tutorialStep3Content: "1. Use the command buttons to add actions like Take Off, Move, Yaw, etc.\n2. Specify parameters in the input fields.\n3. Each command will be added to your code area.",
         tutorialStep4Title: "Running Your Code",
-        tutorialStep4Content: "After setting up your flight path, click the 'Run Code' button to execute the instructions and see your drone navigate the path.",
+        tutorialStep4Content: "After setting up your flight path, click the 'Run / Pause' button to execute the instructions and see your drone navigate the path.",
         tutorialStep5Title: "Previewing the Path",
         tutorialStep5Content: "Use the 'Path Preview' button to visualize the entire flight path before running the code.",
         tutorialStep6Title: "Resetting the Simulation",
         tutorialStep6Content: "If you want to start over, click the 'Reset' button to clear your code and reset the drone's position.",
         tutorialStep7Title: "Getting Help",
-        tutorialStep7Content: "At any time, you can click the 'Help' button to revisit this tutorial.",
+        tutorialStep7Content: "At any time, you can click the 'Tutorial' button to revisit this tutorial.",
         nextButton: "Next",
         prevButton: "Previous",
         closeButton: "Close",
@@ -1349,11 +1379,25 @@ const translations = {
         landing: "Landing...",
         simulationReset: "Simulation reset. Drone restored to default position and orientation.",
         noValidCommands: "No valid commands to preview the path.",
-        invalidCodeStructure: "The code must start with 'Take Off' and end with 'Land'."
+        invalidCodeStructure: "The code must start with 'Take Off' and end with 'Land'.",
+        throttleUpAlert: "Please enter a value or variable for Throttle Up.",
+        throttleDownAlert: "Please enter a value or variable for Throttle Down.",
+        yawLeftAlert: "Please enter a value or variable for Yaw Left.",
+        yawRightAlert: "Please enter a value or variable for Yaw Right.",
+        pitchForwardAlert: "Please enter a value or variable for Pitch Forward.",
+        pitchBackwardAlert: "Please enter a value or variable for Pitch Backward.",
+        rollLeftAlert: "Please enter a value or variable for Roll Left.",
+        rollRightAlert: "Please enter a value or variable for Roll Right.",
+        pitchForwardMinAlert: "Please enter a value of at least 10 for Pitch Forward.",
+        pitchBackwardMinAlert: "Please enter a value of at least 10 for Pitch Backward.",
+        rollLeftMinAlert: "Please enter a value of at least 10 for Roll Left.",
+        rollRightMinAlert: "Please enter a value of at least 10 for Roll Right.",
+        repeatAlert: "Please enter the number of times or a variable name to repeat.",
+        setVariableAlert: "Please enter both variable name and value."
     },
     zh: {
         title: "編程表現模擬",
-        instruction: "使用方塊創建無人機的飛行路徑，然後點擊「執行編程」以執行指令。",
+        instruction: "使用方塊創建無人機的飛行路徑，然後點擊「執行 / 暫停」以執行指令。",
         takeOff: "起飛",
         land: "著陸",
         throttleUp: "上升",
@@ -1366,7 +1410,9 @@ const translations = {
         rollRight: "右滾轉",
         repeat: "重複",
         setVariable: "設置",
-        runCode: "執行編程",
+        runPauseCode: "執行 / 暫停",
+        runPauseCodeRunning: "暫停",
+        runPauseCodePaused: "繼續",
         reset: "重置",
         pathPreview: "路徑預覽",
         centre: "居中",
@@ -1385,13 +1431,13 @@ const translations = {
         tutorialStep3Title: "創建飛行路徑",
         tutorialStep3Content: "1. 使用指令按鈕添加起飛、移動、偏航等動作。\n2. 在輸入框中指定參數。\n3. 每個指令都將被添加到你的代碼區域。",
         tutorialStep4Title: "運行你的代碼",
-        tutorialStep4Content: "設置好飛行路徑後，點擊「執行編程」按鈕執行指令，查看無人機導航路徑。",
+        tutorialStep4Content: "設置好飛行路徑後，點擊「執行 / 暫停」按鈕執行指令，查看無人機導航路徑。",
         tutorialStep5Title: "預覽路徑",
         tutorialStep5Content: "使用「路徑預覽」按鈕在運行代碼前可視化整個飛行路徑。",
         tutorialStep6Title: "重置模擬",
         tutorialStep6Content: "如果你想重新開始，點擊「重置」按鈕清除你的代碼並重置無人機的位置。",
         tutorialStep7Title: "獲取幫助",
-        tutorialStep7Content: "在任何時間，你都可以點擊「幫助」按鈕重新訪問這個教學。",
+        tutorialStep7Content: "在任何時間，你都可以點擊「教學」按鈕重新訪問這個教學。",
         nextButton: "下一步",
         prevButton: "上一步",
         closeButton: "關閉",
@@ -1399,7 +1445,21 @@ const translations = {
         landing: "著陸中...",
         simulationReset: "模擬已重置。無人機已恢復到默認位置和方向。",
         noValidCommands: "沒有有效的指令來預覽路徑。",
-        invalidCodeStructure: "代碼必須以「起飛」開始，以「著陸」結束。"
+        invalidCodeStructure: "代碼必須以「起飛」開始，以「著陸」結束。",
+        throttleUpAlert: "請為上升輸入值或變量。",
+        throttleDownAlert: "請為下降輸入值或變量。",
+        yawLeftAlert: "請為左偏航輸入值或變量。",
+        yawRightAlert: "請為右偏航輸入值或變量。",
+        pitchForwardAlert: "請為前俯仰輸入值或變量。",
+        pitchBackwardAlert: "請為後俯仰輸入值或變量。",
+        rollLeftAlert: "請為左滾轉輸入值或變量。",
+        rollRightAlert: "請為右滾轉輸入值或變量。",
+        pitchForwardMinAlert: "請為前俯仰輸入至少 10 的值。",
+        pitchBackwardMinAlert: "請為後俯仰輸入至少 10 的值。",
+        rollLeftMinAlert: "請為左滾轉輸入至少 10 的值。",
+        rollRightMinAlert: "請為右滾轉輸入至少 10 的值。",
+        repeatAlert: "請輸入重複的次數或變量名稱。",
+        setVariableAlert: "請同時輸入變量名稱和數值。"
     }
 };
 
@@ -1430,6 +1490,20 @@ function updateLanguage() {
 
 initGame();
 updateLanguage();
+
+// Run / Pause Button Functionality
+function updateRunButton(){
+    const runButton = document.getElementById('run-button');
+    if(!isExecuting){
+        runButton.textContent = translations[currentLanguage].runPauseCode;
+    }
+    else if(isPaused){
+        runButton.textContent = translations[currentLanguage].runPauseCodePaused;
+    }
+    else{
+        runButton.textContent = translations[currentLanguage].runPauseCodeRunning;
+    }
+}
 
 // Tutorial Modal Functionality
 const tutorialModal = document.getElementById("tutorial-modal");
@@ -1510,6 +1584,12 @@ window.onclick = function(event) {
         tutorialModal.style.display = "none";
     }
 }
+
+</script>
+<script>
+// Three.js and Simulation Scripts
+
+// Existing functions are already defined in the above script tag.
 </script>
 </body>
 </html>
