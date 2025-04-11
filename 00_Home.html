@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenAI-Driven Drone Simulations</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f8ff;
+            background-image: 
+                linear-gradient(to right, #d3d3d3 1px, transparent 1px),
+                linear-gradient(to bottom, #d3d3d3 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: #333;
+        }
+        .container {
+            flex: 1;
+            padding: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .language-switch {
+            text-align: right;
+        }
+        .language-switch button {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background: #003366;
+            color: white;
+            transition: background 0.3s;
+        }
+        .language-switch button:hover {
+            background: #00509e;
+        }
+        .intro {
+            margin-top: 1rem;
+            text-align: center;
+        }
+        .intro p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        .simulations {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .simulation {
+            background: white;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 1rem;
+            flex: 1;
+            min-width: 180px;
+            max-width: 220px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .simulation:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .simulation .icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+        }
+        .simulation h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .simulation p {
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .simulation .pedagogy {
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: #555;
+            font-style: italic;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: #003366;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .simulations {
+                flex-direction: column;
+                align-items: center;
+            }
+            .simulation {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switch -->
+        <div class="language-switch">
+            <button id="language-toggle" onclick="toggleLanguage()">繁體中文</button>
+        </div>
+        <!-- Introductory Paragraph -->
+        <div class="intro">
+            <p id="intro-text">
+                This project demonstrates the power of GenAI in transforming teachers' instructional ideas into interactive, web-based simulations. 
+                These tools provide engaging, cross-disciplinary STEM learning experiences, incorporating drones to foster critical thinking, 
+                spatial reasoning, and hands-on learning in a cost-effective way.
+            </p>
+        </div>
+        <!-- Simulations -->
+        <div class="simulations">
+            <!-- Satellite Positioning -->
+            <div class="simulation">
+                <img class="icon" src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='blue'/><rect x='40' y='40' width='20' height='20' fill='white'/><line x1='30' y1='30' x2='70' y2='70' stroke='white' stroke-width='2'/><line x1='70' y1='30' x2='30' y2='70' stroke='white' stroke-width='2'/></svg>" alt="Satellite Icon">
+                <h3 id="sp-title">Satellite Positioning</h3>
+                <p id="sp-desc">
+                    Explore GNSS concepts in a dynamic 2D environment with real-time satellite movements and drone positioning.
+                </p>
+                <div class="pedagogy" id="sp-pedagogy">
+                    Pedagogical Approaches: Inquiry-based Learning, Scenario Visualization
+                </div>
+            </div>
+            <!-- Virtual Flight -->
+            <div class="simulation">
+                <img class="icon" src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='30' fill='gray'/><circle cx='25' cy='25' r='10' fill='black'/><circle cx='75' cy='25' r='10' fill='black'/><circle cx='25' cy='75' r='10' fill='black'/><circle cx='75' cy='75' r='10' fill='black'/></svg>" alt="Quadcopter Icon">
+                <h3 id="vf-title">Virtual Flight</h3>
+                <p id="vf-desc">
+                    Practice drone piloting in a 3D virtual space, mastering control dimensions and enhancing decision-making skills.
+                </p>
+                <div class="pedagogy" id="vf-pedagogy">
+                    Pedagogical Approaches: Experiential Learning, Competency-based Learning
+                </div>
+            </div>
+            <!-- QuadPhysics -->
+            <div class="simulation">
+                <img class="icon" src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='brown'/><circle cx='50' cy='50' r='25' fill='white'/><circle cx='65' cy='50' r='5' fill='brown'/></svg>" alt="Planet Icon">
+                <h3 id="qp-title">QuadPhysics</h3>
+                <p id="qp-desc">
+                    Experiment with physics concepts like weight, gravity, and propeller speed, simulating diverse planetary conditions.
+                </p>
+                <div class="pedagogy" id="qp-pedagogy">
+                    Pedagogical Approaches: Discovery Learning, Reflective Visualization
+                </div>
+            </div>
+            <!-- Dronography AOV -->
+            <div class="simulation">
+                <img class="icon" src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='slateblue'/><circle cx='50' cy='50' r='10' fill='white'/></svg>" alt="Drone Camera Icon">
+                <h3 id="da-title">Dronography AOV</h3>
+                <p id="da-desc">
+                    Explore relationships between AOV, FOV, and altitude while virtually measuring real-world structures and areas.
+                </p>
+                <div class="pedagogy" id="da-pedagogy">
+                    Pedagogical Approaches: Computational Thinking, Scenario-based Learning
+                </div>
+            </div>
+            <!-- Code Simulation -->
+            <div class="simulation">
+                <img class="icon" src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='tomato'/><text x='50%' y='55%' fill='white' font-size='20' text-anchor='middle' font-family='Arial'>{ }</text></svg>" alt="Code Icon">
+                <h3 id="cs-title">Code Simulation</h3>
+                <p id="cs-desc">
+                    Design, test, and refine autonomous drone navigation code in a 3D environment with real-time path previews.
+                </p>
+                <div class="pedagogy" id="cs-pedagogy">
+                    Pedagogical Approaches: Problem-based Learning, Algorithm Design
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p id="footer-text">© 2025 GenAI Drone Simulations. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleLanguage() {
+            const translations = {
+                en: {
+                    button: "繁體中文",
+                    intro: "This project demonstrates the power of GenAI in transforming teachers' instructional ideas into interactive, web-based simulations. These tools provide engaging, cross-disciplinary STEM learning experiences, incorporating drones to foster critical thinking, spatial reasoning, and hands-on learning in a cost-effective way.",
+                    spTitle: "Satellite Positioning",
+                    spDesc: "Explore GNSS concepts in a dynamic 2D environment with real-time satellite movements and drone positioning.",
+                    spPedagogy: "Pedagogical Approaches: Inquiry-based Learning, Scenario Visualization",
+                    vfTitle: "Virtual Flight",
+                    vfDesc: "Practice drone piloting in a 3D virtual space, mastering control dimensions and enhancing decision-making skills.",
+                    vfPedagogy: "Pedagogical Approaches: Experiential Learning, Competency-based Learning",
+                    qpTitle: "QuadPhysics",
+                    qpDesc: "Experiment with physics concepts like weight, gravity, and propeller speed, simulating diverse planetary conditions.",
+                    qpPedagogy: "Pedagogical Approaches: Discovery Learning, Reflective Visualization",
+                    daTitle: "Dronography AOV",
+                    daDesc: "Explore relationships between AOV, FOV, and altitude while virtually measuring real-world structures and areas.",
+                    daPedagogy: "Pedagogical Approaches: Computational Thinking, Scenario-based Learning",
+                    csTitle: "Code Simulation",
+                    csDesc: "Design, test, and refine autonomous drone navigation code in a 3D environment with real-time path previews.",
+                    csPedagogy: "Pedagogical Approaches: Problem-based Learning, Algorithm Design",
+                    footer: "© 2025 GenAI Drone Simulations. All rights reserved."
+                },
+                zh: {
+                    button: "English",
+                    intro: "此項目展示了 GenAI 在將教師的教學理念轉化為互動式網頁模擬工具方面的強大功能。這些工具提供了引人入勝的跨學科 STEM 學習體驗，結合無人機以促進批判性思維、空間推理和實踐學習的成本效益方式。",
+                    spTitle: "衛星定位",
+                    spDesc: "在動態 2D 環境中探索 GNSS 概念，實時觀察衛星運動和無人機定位。",
+                    spPedagogy: "教學方法：探究式學習，場景可視化",
+                    vfTitle: "虛擬飛行",
+                    vfDesc: "在 3D 虛擬空間中練習無人機駕駛，掌握控制維度並提高決策能力。",
+                    vfPedagogy: "教學方法：體驗式學習，能力導向學習",
+                    qpTitle: "四旋翼物理",
+                    qpDesc: "模擬不同行星條件，實驗重量、重力和螺旋槳速度等物理概念。",
+                    qpPedagogy: "教學方法：發現式學習，反思性可視化",
+                    daTitle: "無人機攝影視角",
+                    daDesc: "探索視角、視場和高度之間的關係，同時虛擬測量實際結構和面積。",
+                    daPedagogy: "教學方法：計算思維，基於場景的學習",
+                    csTitle: "代碼模擬",
+                    csDesc: "在 3D 環境中設計、測試和完善自主無人機導航代碼，並提供實時路徑預覽。",
+                    csPedagogy: "教學方法：基於問題的學習，算法設計",
+                    footer: "© 2025 GenAI 無人機模擬。版權所有。"
+                }
+            };
+
+            const lang = document.getElementById('language-toggle').innerText === "繁體中文" ? "zh" : "en";
+
+            document.getElementById('language-toggle').innerText = translations[lang].button;
+            document.getElementById('intro-text').innerText = translations[lang].intro;
+
+            document.getElementById('sp-title').innerText = translations[lang].spTitle;
+            document.getElementById('sp-desc').innerText = translations[lang].spDesc;
+            document.getElementById('sp-pedagogy').innerText = translations[lang].spPedagogy;
+
+            document.getElementById('vf-title').innerText = translations[lang].vfTitle;
+            document.getElementById('vf-desc').innerText = translations[lang].vfDesc;
+            document.getElementById('vf-pedagogy').innerText = translations[lang].vfPedagogy;
+
+            document.getElementById('qp-title').innerText = translations[lang].qpTitle;
+            document.getElementById('qp-desc').innerText = translations[lang].qpDesc;
+            document.getElementById('qp-pedagogy').innerText = translations[lang].qpPedagogy;
+
+            document.getElementById('da-title').innerText = translations[lang].daTitle;
+            document.getElementById('da-desc').innerText = translations[lang].daDesc;
+            document.getElementById('da-pedagogy').innerText = translations[lang].daPedagogy;
+
+            document.getElementById('cs-title').innerText = translations[lang].csTitle;
+            document.getElementById('cs-desc').innerText = translations[lang].csDesc;
+            document.getElementById('cs-pedagogy').innerText = translations[lang].csPedagogy;
+
+            document.getElementById('footer-text').innerText = translations[lang].footer;
+        }
+    </script>
+</body>
+</html>
