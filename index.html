@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drone Simluations</title>
+    <title>Drone Simulations</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 40;
+            margin: 40px;
             padding: 0;
             height: 100vh;
             display: flex;
@@ -15,7 +15,24 @@
         }
 
         .header {
-            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .header img {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100px;
+            margin: 0px;
+        }
+
+        .header h1, .header h3 {
+            margin: 3px 0;
+            text-align: center;
+            width: 100%;
         }
 
         .app {
@@ -29,8 +46,8 @@
 
         .app iframe {
             width: 100%;
-	    height: 96%;
-	    border: none;
+            height: 96%;
+            border: none;
         }
 
         .button-container {
@@ -50,65 +67,42 @@
             font-weight: bold;
             transition: all 0.3s ease;
         }
-		.selected-button {
-		    border-color: rgba(255, 255, 255, 0.7);
-		    box-shadow: 0 0 20px rgba(255, 255, 255, 0.7), 
-                0 0 50px rgba(255, 255, 255, 0.5);
-		    outline: none;
-		    transform: scale(1.15);
-		}
 
-        .button-gray {
-            background-color: gray;
-            color: white;
+        .selected-button {
+            border-color: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.7),
+                        0 0 50px rgba(255, 255, 255, 0.5);
+            outline: none;
+            transform: scale(1.15);
         }
-        .button-red {
-            background-color: red;
-            color: white;
-        }
-        .button-green {
-            background-color: green;
-            color: white;
-        }
-        .button-brown {
-            background-color: brown;
-            color: white;
-        }
-        .button-slateblue {
-            background-color: slateblue;
-            color: white;
-        }
-        .button-tomato {
-            background-color: tomato;
-            color: white;
-        }
-        .button-language {
-            background-color: black;
-            color: white;
-        }
-        h1 {
-            margin: 3px 0;
-            font-size: 24px;
-        }
-        h3 {
-            margin: 3px 0;
+
+        .button-gray { background-color: gray; color: white; }
+        .button-red { background-color: red; color: white; }
+        .button-green { background-color: green; color: white; }
+        .button-brown { background-color: brown; color: white; }
+        .button-slateblue { background-color: slateblue; color: white; }
+        .button-tomato { background-color: tomato; color: white; }
+        .button-language { background-color: black; color: white; }
+
+        .language-toggle {
+            position: absolute;
+            background-color: #4CAF50;
+            top: -60px;
+            right: 0;
+            margin: 5px;
             font-size: 16px;
         }
-
-.language-toggle {
-    position: absolute;
-    background-color: #4CAF50;
-    top: -60px;
-    right: 0;
-    margin: 5px;
-    font-size: 16px;
-}
     </style>
 </head>
 <body>
-    <h1 id="main-title" style="text-align: center;">Empowering STEM Education with AI-Generated Drone Simulations</h1>
-    <h3 id="author-name" style="text-align: center;">Richard C Y YEUNG, The Education University of Hong Kong</h3>
-    
+    <div class="header">
+        <img src="Project_Logo.png" alt="Project Logo">
+        <div>
+            <h1 id="main-title">Empowering STEM Education with AI-Generated Drone Simulations</h1>
+            <h3 id="author-name">Richard C Y YEUNG, The Education University of Hong Kong</h3>
+        </div>
+    </div>
+
     <div class="button-container">
         <button class="button-language language-toggle" onclick="toggleLanguage()" id="lang-toggle">繁體中文</button>
         <button class="button-gray" onclick="showApp('app0')" id="btn-Home">Home</button>
@@ -120,39 +114,38 @@
     </div>
 
     <div id="app0" class="app">
-        <iframe src="00_Home.html" width="100%" height="600px" frameborder="0"></iframe>
+        <iframe src="00_Home.html"></iframe>
     </div>
 
     <div id="app1" class="app">
-        <iframe src="01_GNSS.html" width="100%" height="600px" frameborder="0"></iframe>
+        <iframe src="01_GNSS.html"></iframe>
     </div>
 
     <div id="app2" class="app">
-        <iframe src="02_Flight.html" width="100%" height="600px" frameborder="0"></iframe>
+        <iframe src="02_Flight.html"></iframe>
     </div>
 
     <div id="app3" class="app">
-        <iframe src="03_Force.html" width="100%" height="600px" frameborder="0"></iframe>
+        <iframe src="03_Force.html"></iframe>
     </div>
 
     <div id="app4" class="app">
-        <iframe src="04_AOV.html" width="100%" height="600px" frameborder="0"></iframe>
+        <iframe src="04_AOV.html"></iframe>
     </div>
 
     <div id="app5" class="app">
-        <iframe src="05_Code.html" width="100%" height="600px" frameborder="0"></iframe>
+        <iframe src="05_Code.html"></iframe>
     </div>
-	
+
     <script>
-        // Language data
         const translations = {
             en: {
                 mainTitle: 'Empowering STEM Education with AI-Generated Drone Simulations',
                 authorName: 'Richard C Y YEUNG, The Education University of Hong Kong',
                 languageButton: '繁體中文',
                 buttons: {
-		    Home: 'Home',
-                    GNSS: 'Satellite Positioing',
+                    Home: 'Home',
+                    GNSS: 'Satellite Positioning',
                     Flight: 'Virtual Flight',
                     Physics: 'QuadPhysics',
                     AOV: 'Dronography AOV',
@@ -164,7 +157,7 @@
                 authorName: '楊 仲 堯，香 港 教 育 大 學 (EdUHK)',
                 languageButton: 'English',
                 buttons: {
-		    Home: '主頁',
+                    Home: '主頁',
                     GNSS: '衛星導航系統',
                     Flight: '模擬飛行器',
                     Physics: '四軸機物理',
@@ -183,15 +176,9 @@
 
         function updateLanguage() {
             const lang = translations[currentLanguage];
-            
-            // Update title and author
             document.getElementById('main-title').textContent = lang.mainTitle;
             document.getElementById('author-name').textContent = lang.authorName;
-            
-            // Update language toggle button
             document.getElementById('lang-toggle').textContent = lang.languageButton;
-
-            // Update button texts
             document.getElementById('btn-Home').textContent = lang.buttons.Home;
             document.getElementById('btn-GNSS').textContent = lang.buttons.GNSS;
             document.getElementById('btn-Flight').textContent = lang.buttons.Flight;
@@ -203,22 +190,15 @@
         function showApp(appId) {
             document.querySelectorAll('button:not(.language-toggle)').forEach(btn => {
                 btn.classList.remove('selected-button');
-        });
-
-            // Hide all apps
+            });
             document.querySelectorAll('.app').forEach(app => app.classList.remove('active'));
-
-            // Show the selected app
             document.getElementById(appId).classList.add('active');
-
-            // Add selected-button class to the clicked button
             const selectedButton = document.querySelector(`[onclick="showApp('${appId}')"]`);
             if (selectedButton) {
                 selectedButton.classList.add('selected-button');
             }
         }
 
-        // Initialize the page
         showApp('app0');
     </script>
 </body>
