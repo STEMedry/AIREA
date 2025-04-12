@@ -36,15 +36,36 @@
     
     /* Introduction Section */
     .intro {
+      display: flex;
       background: linear-gradient(135deg, #ffffff 0%, #e6f7ff 100%);
       border-radius: 8px;
-      padding: 1rem 1rem;
+      padding: 1rem;
       margin-bottom: 1rem;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       position: relative;
+      align-items: stretch;
+    }
+    .intro-left {
+      width: 25%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-right: 1rem;
+    }
+    .intro-right {
+      width: 75%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .project-logo {
+      height: 100%;
+      width: auto;
+      max-height: 50px; /* Adjust as needed to match the right part */
     }
     .intro h2 {
-      font-size: 1.8rem;
+      font-size: 2.2rem;
       margin-bottom: 0.5rem;
       color: #003366;
     }
@@ -55,8 +76,8 @@
     /* Language Switch inside Introduction Section */
     .intro .language-switch {
       position: absolute;
-      top: 0.5rem;
-      right: 1.5rem;
+      top: 0.1rem;
+      right: 0.2rem;
     }
     .intro .language-switch button {
       padding: 0.5rem 1rem;
@@ -92,7 +113,7 @@
     }
     .challenges li {
       margin-bottom: 0.5rem;
-      font-size: 1rem;
+      font-size: 1.1rem;
     }
     .challenges li::before {
       content: "• ";
@@ -126,15 +147,25 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      position: relative;
     }
     .simulation:hover {
       transform: scale(1.03);
       box-shadow: 0 6px 12px rgba(0,0,0,0.15);
     }
     .simulation .icon {
-      width: 70px;
-      height: 70px;
+      width: 120px;
+      height: 120px;
       margin: 0 auto 0.5rem;
+      transition: transform 0.5s;
+    }
+    /* Rotation Animation */
+    @keyframes rotate-icon {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .simulation:hover .icon {
+      animation: rotate-icon 2s linear infinite;
     }
     .simulation h3 {
       font-size: 1.1rem;
@@ -147,30 +178,30 @@
       margin-bottom: 0.2rem;
     }
     /* Pedagogical approaches box styling */
-.pedagogy {
-  margin-top: 0.1rem;
-  font-size: 0.85rem;
-  color: #555;
-  font-style: italic;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 0.5rem;
-  background-color: #f9f9f9;
-  line-height: 1; /* Ensures consistent line spacing */
-}
-
-.pedagogy-title {
-  display: block;
-  margin-bottom: 0.1rem;
-  font-weight: 700;
-  text-decoration: underline;
-}
-
-.pedagogy-item {
-  display: block;
-  margin-bottom: 0.1rem; /* Adjust to your liking */
-}
+    .pedagogy {
+      margin-top: 0.1rem;
+      font-size: 0.85rem;
+      color: #555;
+      font-style: italic;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 0.5rem;
+      background-color: #f9f9f9;
+      line-height: 1; /* Ensures consistent line spacing */
+    }
     
+    .pedagogy-title {
+      display: block;
+      margin-bottom: 0.1rem;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+    
+    .pedagogy-item {
+      display: block;
+      margin-bottom: 0.1rem; /* Adjust to your liking */
+    }
+        
     /* Footer */
     footer {
       display: flex;
@@ -199,6 +230,13 @@
     }
     
     @media (max-width: 768px) {
+      .intro {
+        flex-direction: column;
+      }
+      .intro-left, .intro-right {
+        width: 100%;
+        padding: 0;
+      }
       .simulations {
         flex-direction: column;
         align-items: center;
@@ -213,15 +251,21 @@
   <div class="container">
     <!-- Introduction Section with Language Switch inside -->
     <div class="intro">
-      <div class="language-switch">
-        <button id="language-toggle" onclick="toggleLanguage()">繁體中文</button>
+      <div class="intro-left">
+        <!-- Replace the SVG below with your actual project logo if available -->
+        <img src="Project_Logo.png" width='200' height='150'>
       </div>
-      <h2 id="intro-title">Introduction</h2>
-      <p id="intro-text">
-        This project demonstrates the power of GenAI in transforming teachers' instructional ideas into interactive, web-based simulations.
-        These tools provide engaging, cross-disciplinary STEM learning experiences, incorporating drones to foster critical thinking,
-        spatial reasoning, and hands-on learning in a cost-effective way.
-      </p>
+      <div class="intro-right">
+        <div class="language-switch">
+          <button id="language-toggle" onclick="toggleLanguage()">繁體中文</button>
+        </div>
+        <h2 id="intro-title">Introduction</h2>
+        <p id="intro-text">
+          This project demonstrates the power of GenAI in transforming teachers' instructional ideas into interactive, web-based simulations.
+          These tools provide engaging, cross-disciplinary STEM learning experiences, incorporating drones to foster critical thinking,
+          spatial reasoning, and hands-on learning in a cost-effective way.
+        </p>
+      </div>
     </div>
     <!-- Challenges Section -->
     <div class="challenges">
@@ -239,7 +283,7 @@
 
       <!-- Satellite Positioning -->
       <div class="simulation">
-        <img class="icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='blue'/%3E%3Crect x='40' y='40' width='20' height='20' fill='white'/%3E%3Cline x1='30' y1='30' x2='70' y2='70' stroke='white' stroke-width='2'/%3E%3Cline x1='70' y1='30' x2='30' y2='70' stroke='white' stroke-width='2'/%3E%3C/svg%3E" alt="Satellite Icon">
+        <img class="icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='blue'/%3E%3Cline x1='30' y1='30' x2='70' y2='70' stroke='white' stroke-width='2'/%3E%3Cline x1='70' y1='30' x2='30' y2='70' stroke='white' stroke-width='2'/%3E%3C/svg%3E" alt="Satellite Icon">
         <h3 id="sp-title">Satellite Positioning</h3>
         <p id="sp-desc">
           Explore GNSS concepts in a 2D environment with satellite movements and drone positioning.
@@ -273,34 +317,34 @@
         </p>
         <div class="pedagogy" id="qp-pedagogy">
           <span class="pedagogy-title">Pedagogical Approaches</span>
-	  <span class="pedagogy-item">Discovery Learning</span>
-	  <span class="pedagogy-item">Reflective Visualization</span>
+  <span class="pedagogy-item">Discovery Learning</span>
+  <span class="pedagogy-item">Reflective Visualization</span>
         </div>
       </div>
       <!-- Dronography AOV -->
       <div class="simulation">
-        <img class="icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='slateblue'/%3E%3Ccircle cx='50' cy='50' r='10' fill='white'/%3E%3C/svg%3E" alt="Drone Camera Icon">
+        <img class="icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='slateblue'/%3E%3Crect x='35' y='35' width='30' height='30' fill='white'/%3E%3C/svg%3E" alt="Drone Camera Icon">
         <h3 id="da-title">Dronography AOV</h3>
         <p id="da-desc">
           Explore AOV, FOV, and altitude to virtually measure real-world structures and areas.
         </p>
         <div class="pedagogy" id="da-pedagogy">
           <span class="pedagogy-title">Pedagogical Approaches</span>
-	  <span class="pedagogy-item">Computational Thinking</span>
-	  <span class="pedagogy-item">Scenario-based Learning</span>
+  <span class="pedagogy-item">Computational Thinking</span>
+  <span class="pedagogy-item">Scenario-based Learning</span>
         </div>
       </div>
       <!-- Code Simulation -->
       <div class="simulation">
-        <img class="icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='tomato'/%3E%3Ctext x='50%25' y='55%25' fill='white' font-size='20' text-anchor='middle' font-family='Arial'%3E%7B+%7D%3C/text%3E%3C/svg%3E" alt="Code Icon">
+        <img class="icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='tomato'/%3E%3Ctext x='50%25' y='55%25' fill='white' font-size='40' text-anchor='middle' font-family='Arial'%3E{+}%3C/text%3E%3C/svg%3E" alt="Code Icon">
         <h3 id="cs-title">Code Simulation</h3>
         <p id="cs-desc">
           Create and refine drone navigation code in 3D with real-time path previews.
         </p>
         <div class="pedagogy" id="cs-pedagogy">
           <span class="pedagogy-title">Pedagogical Approaches</span>
-	  <span class="pedagogy-item">Problem-based Learning</span>
-	  <span class="pedagogy-item">Algorithm Design</span>
+  <span class="pedagogy-item">Problem-based Learning</span>
+  <span class="pedagogy-item">Algorithm Design</span>
         </div>
       </div>
     </div>
